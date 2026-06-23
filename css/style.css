@@ -18,14 +18,16 @@ html, body {
   padding: 0;
   background: #e9e1d8;
   color: var(--ink);
-  font-family: 'Battambang', 'Playfair Display', serif;
+  font-family: 'Battambang', 'Khmer OS', 'Noto Sans Khmer', 'Khmer Sangam MN', 'Playfair Display', serif;
   -webkit-font-smoothing: antialiased;
 }
 
 /* language visibility */
 html[data-lang="km"] .en { display: none; }
 html[data-lang="en"] .km { display: none; }
-html[data-lang="km"] body { font-family: 'Battambang', serif; }
+/* System Khmer fallbacks keep Khmer text legible (no tofu boxes) if the
+   Google Fonts request is ever slow, blocked, or offline. */
+html[data-lang="km"] body { font-family: 'Battambang', 'Khmer OS', 'Noto Sans Khmer', 'Khmer Sangam MN', serif; }
 
 a { text-decoration: none; color: inherit; }
 button { font-family: inherit; cursor: pointer; border: none; background: none; }
@@ -139,7 +141,7 @@ html[data-lang="en"] .knob { left: 16px; }
 .monogram-mini.center { margin: 0 18px; }
 
 .couple-script {
-  font-family: 'Moul', serif;
+  font-family: 'Moul', 'Khmer OS', 'Noto Sans Khmer', serif;
   color: var(--gold);
   font-size: 30px;
   margin: 4px 0 10px;
