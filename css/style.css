@@ -169,8 +169,13 @@ html[data-lang="en"] .knob { left: 16px; }
   border-radius: 999px;
   box-shadow: 0 6px 14px rgba(201,162,39,0.35);
   font-size: 15px;
+  animation: invite-pulse 2.6s ease-in-out infinite;
 }
 .open-btn:active { transform: scale(0.97); }
+@keyframes invite-pulse {
+  0%, 100% { box-shadow: 0 6px 14px rgba(201,162,39,0.35); }
+  50% { box-shadow: 0 6px 22px rgba(201,162,39,0.6); }
+}
 
 /* ---------- Date cover ---------- */
 .cover { min-height: 100vh; display: flex; align-items: center; justify-content: center; }
@@ -693,4 +698,5 @@ a, button { transition: transform 0.15s ease, box-shadow 0.15s ease, background 
   .splash::before, .hero-photo::before { animation: none; }
   .in-view { animation: none; }
   a, button, .open-btn, .ornate-btn, .gallery-grid .tile, .lightbox, .lightbox-content { transition: none; }
+  .open-btn { animation: none; }
 }
