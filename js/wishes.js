@@ -12,13 +12,20 @@ let selectedAttending = null;
 rsvpButtons.forEach(btn => {
   btn.addEventListener('click', () => {
     selectedAttending = btn.dataset.attending;
-    rsvpButtons.forEach(b => b.classList.toggle('selected', b === btn));
+    rsvpButtons.forEach(b => {
+      const isSelected = b === btn;
+      b.classList.toggle('selected', isSelected);
+      b.setAttribute('aria-checked', String(isSelected));
+    });
   });
 });
 
 function resetRsvp() {
   selectedAttending = null;
-  rsvpButtons.forEach(b => b.classList.remove('selected'));
+  rsvpButtons.forEach(b => {
+    b.classList.remove('selected');
+    b.setAttribute('aria-checked', 'false');
+  });
 }
 
 function setStatus(text) {
