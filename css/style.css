@@ -611,6 +611,18 @@ a, button { transition: transform 0.15s ease, box-shadow 0.15s ease, background 
   box-shadow: 0 0 0 4px rgba(201,162,39,0.15);
 }
 
+/* Cascading reveal: each timeline item settles in slightly after the one
+   before it once the schedule section enters the viewport. */
+.screen.in-view .timeline li { animation: settle-in 0.6s ease-out both; }
+.screen.in-view .timeline li:nth-child(1) { animation-delay: 0.03s; }
+.screen.in-view .timeline li:nth-child(2) { animation-delay: 0.09s; }
+.screen.in-view .timeline li:nth-child(3) { animation-delay: 0.15s; }
+.screen.in-view .timeline li:nth-child(4) { animation-delay: 0.21s; }
+.screen.in-view .timeline li:nth-child(5) { animation-delay: 0.27s; }
+.screen.in-view .timeline li:nth-child(6) { animation-delay: 0.33s; }
+.screen.in-view .timeline li:nth-child(7) { animation-delay: 0.39s; }
+.screen.in-view .timeline li:nth-child(8) { animation-delay: 0.45s; }
+
 .gallery-grid .tile {
   transition: transform 0.25s ease, box-shadow 0.25s ease;
   box-shadow: 0 4px 14px rgba(58,53,48,0.08);
@@ -720,6 +732,7 @@ a:focus-visible, button:focus-visible {
   .petals-bg { display: none; }
   .splash::before, .hero-photo::before { animation: none; }
   .in-view { animation: none; }
+  .screen.in-view .timeline li { animation: none; }
   a, button, .open-btn, .ornate-btn, .gallery-grid .tile, .lightbox, .lightbox-content { transition: none; }
   .open-btn { animation: none; }
 }
