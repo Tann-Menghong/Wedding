@@ -131,6 +131,8 @@ html[data-lang="en"] .knob { left: 16px; }
   z-index: 3;
 }
 .sound-toggle.muted { color: #c7c0b8; }
+.mute-slash { opacity: 0; transition: opacity 0.2s ease; }
+.sound-toggle.muted .mute-slash { opacity: 1; }
 
 .monogram-mini {
   font-family: 'Great Vibes', cursive;
