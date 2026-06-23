@@ -207,11 +207,34 @@ html[data-lang="en"] .knob { left: 16px; }
 
 /* ---------- Invitation ---------- */
 .section-title {
+  position: relative;
   text-align: center;
   color: var(--gold);
   font-size: 20px;
   font-weight: 700;
-  margin-bottom: 22px;
+  margin-bottom: 30px;
+  padding-bottom: 14px;
+}
+.section-title::after {
+  content: '';
+  position: absolute;
+  left: 50%;
+  bottom: 0;
+  width: 56px;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, var(--gold-light) 20%, var(--gold) 50%, var(--gold-light) 80%, transparent);
+  transform: translateX(-50%);
+}
+.section-title::before {
+  content: '✦';
+  position: absolute;
+  left: 50%;
+  bottom: -5px;
+  transform: translateX(-50%);
+  font-size: 11px;
+  color: var(--gold);
+  background: var(--cream);
+  padding: 0 6px;
 }
 .parents-row { display: flex; justify-content: space-between; gap: 12px; margin-bottom: 18px; }
 .parent-col { flex: 1; text-align: center; }
