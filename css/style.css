@@ -192,13 +192,20 @@ html[data-lang="en"] .knob { left: 16px; }
   display: flex;
   flex-direction: column;
   border: 1px solid var(--olive);
-  border-radius: 8px;
-  padding: 6px 10px;
+  border-radius: 10px;
+  padding: 8px 12px;
   color: var(--olive-dark);
   font-weight: 700;
   font-size: 14px;
+  background: linear-gradient(180deg, #fff 0%, rgba(91,107,69,0.06) 100%);
+  box-shadow: 0 4px 12px rgba(91,107,69,0.12);
 }
-.date-num { font-size: 42px; color: var(--olive-dark); font-weight: 700; }
+.date-num {
+  font-size: 42px;
+  color: var(--olive-dark);
+  font-weight: 700;
+  text-shadow: 0 2px 10px rgba(201,162,39,0.25);
+}
 .date-num.small { font-size: 30px; }
 .date-row.small { margin: 6px 0; }
 .date-year { font-size: 26px; color: var(--olive-dark); font-weight: 700; margin: 4px 0; }
