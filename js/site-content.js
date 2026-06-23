@@ -74,14 +74,22 @@ function formatHour12(hours, minutes) {
 }
 
 export function describeDate(isoString) {
-  const date = new Date(isoString);
-  const weekdayEn = EN_WEEKDAYS[date.getDay()];
-  const weekdayKm = KHMER_WEEKDAYS[date.getDay()];
-  const day = date.getDate();
-  const monthEn = EN_MONTHS[date.getMonth()];
-  const monthKm = KHMER_MONTHS[date.getMonth()];
-  const year = date.getFullYear();
-  const timeStr = formatHour12(date.getHours(), date.getMinutes());
+  // Parse the date/time fields literally from the string (rather than via
+  // `new Date(isoString).getHours()` etc.) so the displayed ceremony date
+  // and time always show the venue's local wall-clock time, regardless of
+  // the timezone of whoever is viewing the page.
+  const [, yStr, moStr, dStr, hStr, miStr] = isoString.match(/^(\d{4})-(\d{2})-(\d{2})T(\d{2}):(\d{2})/);
+  const year = Number(yStr);
+  const monthIdx = Number(moStr) - 1;
+  const day = Number(dStr);
+  const hours = Number(hStr);
+  const minutes = Number(miStr);
+  const weekdayIdx = new Date(Date.UTC(year, monthIdx, day)).getUTCDay();
+  const weekdayEn = EN_WEEKDAYS[weekdayIdx];
+  const weekdayKm = KHMER_WEEKDAYS[weekdayIdx];
+  const monthEn = EN_MONTHS[monthIdx];
+  const monthKm = KHMER_MONTHS[monthIdx];
+  const timeStr = formatHour12(hours, minutes);
 
   return {
     weekdayKm: `ថ្ងៃ ${weekdayKm}`,
