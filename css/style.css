@@ -282,10 +282,22 @@ html[data-lang="en"] .knob { left: 16px; }
   background: linear-gradient(0deg, rgba(0,0,0,0.55), rgba(0,0,0,0));
   color: #fff;
 }
-.countdown-label { font-weight: 700; margin-bottom: 10px; }
-.countdown { display: flex; justify-content: center; gap: 14px; margin-bottom: 10px; }
-.cd-unit { display: flex; flex-direction: column; align-items: center; min-width: 46px; }
-.cd-num { font-size: 26px; font-weight: 700; }
+.countdown-label { font-weight: 700; margin-bottom: 10px; letter-spacing: 0.04em; }
+.countdown { display: flex; justify-content: center; gap: 10px; margin-bottom: 10px; }
+.cd-unit {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  min-width: 54px;
+  padding: 10px 6px;
+  border-radius: 14px;
+  background: rgba(255,255,255,0.14);
+  border: 1px solid rgba(255,255,255,0.22);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+}
+.cd-num { font-size: 26px; font-weight: 700; line-height: 1; font-variant-numeric: tabular-nums; }
 .cd-label { font-size: 11px; opacity: 0.85; }
 .congrats-text { color: var(--gold-light); font-weight: 700; font-size: 18px; margin: 6px 0 0; }
 
