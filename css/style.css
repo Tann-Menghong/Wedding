@@ -449,6 +449,14 @@ html[data-lang="en"] .knob { left: 16px; }
   font-size: 13px;
   background: var(--cream);
 }
+.site-footer::before {
+  content: '❀';
+  display: block;
+  color: var(--gold);
+  font-size: 16px;
+  margin-bottom: 12px;
+  opacity: 0.85;
+}
 
 /* ---------- Bottom nav ---------- */
 .bottom-nav {
