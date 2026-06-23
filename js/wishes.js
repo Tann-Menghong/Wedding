@@ -64,7 +64,7 @@ function renderWishes(wishes) {
 
     const timeEl = document.createElement('p');
     timeEl.className = 'wish-time';
-    timeEl.textContent = createdAt ? new Date(createdAt).toLocaleString() : 'just now';
+    timeEl.textContent = createdAt ? new Date(createdAt).toLocaleString() : 'Just now / ឥឡូវនេះ';
 
     card.append(nameEl, attendingEl, msgEl, timeEl);
     listEl.appendChild(card);
