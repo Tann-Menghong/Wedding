@@ -346,7 +346,17 @@ html[data-lang="en"] .knob { left: 16px; }
   border-bottom: 1px dashed var(--gold-light);
 }
 .timeline li:last-child { border-bottom: none; }
-.timeline .time { display: block; color: var(--gold); font-weight: 700; font-size: 15px; margin-bottom: 4px; }
+.timeline .time {
+  display: inline-block;
+  color: #fff;
+  background: linear-gradient(180deg, #e7c878, var(--gold));
+  font-weight: 700;
+  font-size: 13px;
+  padding: 3px 14px;
+  border-radius: 999px;
+  margin-bottom: 8px;
+  box-shadow: 0 3px 8px rgba(201,162,39,0.25);
+}
 .timeline p { margin: 0; color: var(--olive-dark); font-size: 14px; font-weight: 700; }
 
 /* ---------- Location ---------- */
