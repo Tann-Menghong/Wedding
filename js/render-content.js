@@ -63,12 +63,21 @@ function buildGallery(urls) {
   urls.forEach(url => {
     const tile = document.createElement('div');
     tile.className = 'tile photo-tile';
+    tile.setAttribute('role', 'button');
+    tile.setAttribute('tabindex', '0');
+    tile.setAttribute('aria-label', 'View photo / មើលរូបភាព');
     const img = document.createElement('img');
     img.src = url;
     img.alt = '';
     img.loading = 'lazy';
     tile.appendChild(img);
     tile.addEventListener('click', () => openLightboxImage(url));
+    tile.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        openLightboxImage(url);
+      }
+    });
     grid.appendChild(tile);
   });
   return true;

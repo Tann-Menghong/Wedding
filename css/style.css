@@ -734,7 +734,7 @@ a, button { transition: transform 0.15s ease, box-shadow 0.15s ease, background 
 /* Themed keyboard-focus ring (only shows for keyboard/programmatic focus,
    not mouse clicks) so tabbing through the page stays on-brand instead of
    falling back to the browser's default blue outline. */
-a:focus-visible, button:focus-visible {
+a:focus-visible, button:focus-visible, [role="button"]:focus-visible {
   outline: 2px solid var(--gold);
   outline-offset: 2px;
 }

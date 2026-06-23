@@ -180,8 +180,11 @@ document.addEventListener('wedding:content-ready', (e) => {
   for (let i = 0; i < TILE_COUNT; i++) {
     const tile = document.createElement('div');
     tile.className = 'tile';
+    tile.setAttribute('role', 'button');
+    tile.setAttribute('tabindex', '0');
+    tile.setAttribute('aria-label', 'View photo placeholder / មើលរូបភាពគំរូ');
     tile.innerHTML = `<svg viewBox="0 0 24 24" width="28" height="28"><path fill="currentColor" d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"/></svg>`;
-    tile.addEventListener('click', () => {
+    const openTile = () => {
       content.innerHTML = tile.innerHTML;
       content.style.display = 'flex';
       content.style.alignItems = 'center';
@@ -189,6 +192,13 @@ document.addEventListener('wedding:content-ready', (e) => {
       content.style.background = 'linear-gradient(160deg, #efd9c4, #cbb59f)';
       content.style.color = '#fff';
       lightbox.classList.add('open');
+    };
+    tile.addEventListener('click', openTile);
+    tile.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        openTile();
+      }
     });
     grid.appendChild(tile);
   }
