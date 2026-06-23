@@ -282,6 +282,9 @@ html[data-lang="en"] .knob { left: 16px; }
 
 .cta-row { text-align: center; margin-top: 22px; }
 .ornate-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
   background: linear-gradient(180deg, #f3dca0, var(--gold));
   color: #fff;
   font-weight: 700;
