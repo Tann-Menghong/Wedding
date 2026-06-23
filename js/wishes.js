@@ -104,7 +104,7 @@ async function initFirebase() {
       renderWishes(wishes);
     }, (err) => {
       console.error('Failed to load wishes', err);
-      renderEmpty('Could not load wishes right now. Please try again later.');
+      renderEmpty('Could not load wishes right now. Please try again later. / មិនអាចទាញយកសារជូនពរបានទេពេលនេះ សូមព្យាយាមម្តងទៀតពេលក្រោយ។');
     });
 
     form.addEventListener('submit', async (e) => {
@@ -131,13 +131,13 @@ async function initFirebase() {
         setStatus('Thank you for your wishes! / អរគុណសម្រាប់សារជូនពរ!');
       } catch (err) {
         console.error('Failed to send wish', err);
-        setStatus('Something went wrong. Please try again.');
+        setStatus('Something went wrong. Please try again. / មានបញ្ហាបច្ចេកទេស សូមព្យាយាមម្តងទៀត។');
       } finally {
         submitBtn.disabled = false;
       }
     });
   } catch (err) {
     console.error('Firebase init failed', err);
-    renderEmpty('Could not connect to the guestbook service.');
+    renderEmpty('Could not connect to the guestbook service. / មិនអាចភ្ជាប់ទៅសេវាសារជូនពរបានទេ។');
   }
 }
