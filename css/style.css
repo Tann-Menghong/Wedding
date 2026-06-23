@@ -640,7 +640,12 @@ a, button { transition: transform 0.15s ease, box-shadow 0.15s ease, background 
   -webkit-backdrop-filter: blur(10px);
 }
 .nav-item { transition: color 0.2s ease, background 0.2s ease; }
-.nav-item.active { box-shadow: 0 4px 10px rgba(91,107,69,0.3); }
+.nav-item.active { box-shadow: 0 4px 10px rgba(91,107,69,0.3); animation: nav-pop 0.35s ease-out; }
+@keyframes nav-pop {
+  0% { transform: scale(0.8); }
+  60% { transform: scale(1.15); }
+  100% { transform: scale(1); }
+}
 
 /* Preserve admin-entered line breaks in long-form text fields */
 .venue-text, .invitation-message, .thanks-message, .site-footer p.km, .site-footer p.en {
@@ -733,6 +738,7 @@ a:focus-visible, button:focus-visible {
   .splash::before, .hero-photo::before { animation: none; }
   .in-view { animation: none; }
   .screen.in-view .timeline li { animation: none; }
+  .nav-item.active { animation: none; }
   a, button, .open-btn, .ornate-btn, .gallery-grid .tile, .lightbox, .lightbox-content { transition: none; }
   .open-btn { animation: none; }
 }
