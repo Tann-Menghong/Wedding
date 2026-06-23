@@ -199,6 +199,9 @@ document.addEventListener('wedding:content-ready', (e) => {
   lightbox.addEventListener('click', (e) => {
     if (e.target === lightbox) lightbox.classList.remove('open');
   });
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') lightbox.classList.remove('open');
+  });
 })();
 
 // ============ Bottom nav scroll-spy + smooth scroll ============
