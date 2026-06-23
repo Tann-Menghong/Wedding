@@ -430,7 +430,9 @@ html[data-lang="en"] .knob { left: 16px; }
 .wish-card {
   background: #eef1e6;
   border-radius: 12px;
-  padding: 12px 14px;
+  padding: 12px 14px 12px 16px;
+  border-left: 3px solid var(--gold);
+  box-shadow: 0 3px 10px rgba(91,107,69,0.08);
 }
 .wish-card .wish-name { font-weight: 700; color: var(--olive-dark); font-size: 14px; margin: 0 0 4px; }
 .wish-card .wish-attending { font-size: 11px; font-weight: 700; margin: 0 0 4px; }
