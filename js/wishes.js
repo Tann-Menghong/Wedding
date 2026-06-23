@@ -72,7 +72,8 @@ function renderWishes(wishes) {
 }
 
 if (!isFirebaseConfigured) {
-  renderEmpty('Guest wishes are not connected yet. Configure Firebase in js/firebase-config.js (see README.md) to enable this feature.');
+  // Guest-facing copy only — setup instructions belong in README.md, not on the live page.
+  renderEmpty('Guest wishes are coming soon! / សារជូនពរនឹងមកដល់ឆាប់ៗនេះ!');
   submitBtn.disabled = true;
   setStatus('');
 } else {
