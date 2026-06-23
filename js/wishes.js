@@ -1,4 +1,4 @@
-import { firebaseConfig } from './firebase-config.js';
+import { isFirebaseConfigured, getFirebaseApp, FIREBASE_CDN } from './firebase-init.js';
 
 const form = document.getElementById('wishForm');
 const nameInput = document.getElementById('wishName');
@@ -7,8 +7,6 @@ const submitBtn = document.getElementById('wishSubmitBtn');
 const statusEl = document.getElementById('wishStatus');
 const listEl = document.getElementById('wishList');
 const rsvpButtons = document.querySelectorAll('#rsvpToggle .rsvp-btn');
-
-const isConfigured = firebaseConfig.apiKey !== 'YOUR_API_KEY';
 
 let selectedAttending = null;
 rsvpButtons.forEach(btn => {
@@ -66,7 +64,7 @@ function renderWishes(wishes) {
   });
 }
 
-if (!isConfigured) {
+if (!isFirebaseConfigured) {
   renderEmpty('Guest wishes are not connected yet. Configure Firebase in js/firebase-config.js (see README.md) to enable this feature.');
   submitBtn.disabled = true;
   setStatus('');
@@ -76,12 +74,11 @@ if (!isConfigured) {
 
 async function initFirebase() {
   try {
-    const { initializeApp } = await import('https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js');
+    const app = await getFirebaseApp();
     const {
       getFirestore, collection, addDoc, query, orderBy, limit, onSnapshot, serverTimestamp
-    } = await import('https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js');
+    } = await import(`${FIREBASE_CDN}/firebase-firestore.js`);
 
-    const app = initializeApp(firebaseConfig);
     const db = getFirestore(app);
     const wishesRef = collection(db, 'wishes');
 

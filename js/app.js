@@ -1,8 +1,10 @@
 // ============ Config ============
-const WEDDING_DATE = new Date('2026-12-26T17:00:00+07:00');
+// These are reassigned by the wedding:content-ready listener below once
+// js/render-content.js resolves the (possibly Firebase-backed) site content.
+let WEDDING_DATE = new Date('2026-12-26T17:00:00+07:00');
 const WEDDING_TITLE = 'Wedding of Tann Menghong & Ouk Sokha';
-const VENUE_TEXT = 'Tuol Domnak Village, Cambodia';
-const MAPS_URL = `https://www.google.com/maps?q=${encodeURIComponent('ភូមិទួលដំណាក់, Cambodia')}`;
+let VENUE_TEXT = 'Tuol Domnak Village, Cambodia';
+let MAPS_URL = `https://www.google.com/maps?q=${encodeURIComponent('ភូមិទួលដំណាក់, Cambodia')}`;
 
 // ============ Language toggle ============
 function setLang(lang) {
@@ -134,9 +136,13 @@ function setLang(lang) {
 })();
 
 // ============ QR codes (location + gift placeholder) ============
-(function initQrCodes() {
+function redrawMapQr() {
   if (typeof QRCode === 'undefined') return;
   QRCode.toCanvas(document.getElementById('mapQr'), MAPS_URL, { width: 160, margin: 1 }, () => {});
+}
+(function initQrCodes() {
+  if (typeof QRCode === 'undefined') return;
+  redrawMapQr();
   QRCode.toCanvas(
     document.getElementById('giftQr'),
     'Sample placeholder QR. Replace with your own KHQR image from your bank app.',
@@ -144,6 +150,15 @@ function setLang(lang) {
     () => {}
   );
 })();
+
+// ============ Apply dynamic content once render-content.js resolves it ============
+document.addEventListener('wedding:content-ready', (e) => {
+  const { weddingDate, venueText, mapsUrl } = e.detail;
+  if (weddingDate && !isNaN(weddingDate.getTime())) WEDDING_DATE = weddingDate;
+  if (venueText) VENUE_TEXT = venueText.en || VENUE_TEXT;
+  if (mapsUrl) MAPS_URL = mapsUrl;
+  redrawMapQr();
+});
 
 // ============ Currency toggle (display only) ============
 (function initCurrencyToggle() {
@@ -224,4 +239,60 @@ function setLang(lang) {
   btn.addEventListener('click', () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   });
+})();
+
+// ============ Falling petals background ============
+(function initPetals() {
+  if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  const bg = document.createElement('div');
+  bg.className = 'petals-bg';
+  bg.setAttribute('aria-hidden', 'true');
+  const PETAL_COUNT = 16;
+  for (let i = 0; i < PETAL_COUNT; i++) {
+    const isFlower = i % 4 === 0;
+    const petal = isFlower
+      ? (() => {
+          const svgNS = 'http://www.w3.org/2000/svg';
+          const svg = document.createElementNS(svgNS, 'svg');
+          svg.setAttribute('viewBox', '-12 -16 24 32');
+          svg.classList.add('petal', 'petal-flower');
+          const use = document.createElementNS(svgNS, 'use');
+          use.setAttribute('href', '#flower-motif');
+          svg.appendChild(use);
+          return svg;
+        })()
+      : document.createElement('span');
+    if (!isFlower) petal.className = `petal petal-${(i % 4) + 1}`;
+    const left = Math.random() * 100;
+    const duration = 11 + Math.random() * 10;
+    const delay = Math.random() * -20;
+    const drift = (Math.random() * 80 - 40).toFixed(0);
+    const size = (isFlower ? 14 + Math.random() * 8 : 10 + Math.random() * 10).toFixed(0);
+    petal.style.left = `${left}%`;
+    petal.style.width = `${size}px`;
+    petal.style.height = `${size}px`;
+    petal.style.animationDuration = `${duration}s, ${(3 + Math.random() * 3).toFixed(1)}s`;
+    petal.style.animationDelay = `${delay}s, ${delay}s`;
+    petal.style.setProperty('--drift', `${drift}px`);
+    bg.appendChild(petal);
+  }
+  document.body.appendChild(bg);
+})();
+
+// ============ Scroll-reveal fade-in for sections ============
+(function initScrollReveal() {
+  const targets = document.querySelectorAll('.screen, .site-footer');
+  if (!('IntersectionObserver' in window) || !targets.length) {
+    targets.forEach(t => t.classList.add('in-view'));
+    return;
+  }
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('in-view');
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.12 });
+  targets.forEach(t => observer.observe(t));
 })();

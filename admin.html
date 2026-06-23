@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Admin — Wedding Site</title>
+<meta name="robots" content="noindex, nofollow">
+<link rel="stylesheet" href="css/admin.css">
+</head>
+<body>
+
+<div id="notConfiguredView" class="state-view hidden">
+  <div class="state-card">
+    <h1>Admin not connected yet</h1>
+    <p>This page edits the wedding site through Firebase. Configure your project in
+      <code>js/firebase-config.js</code>, enable Email/Password sign-in and Storage, then
+      publish <code>firestore.rules</code> and <code>storage.rules</code>. See the
+      "Enable the admin page" section of <code>README.md</code> for step-by-step instructions.</p>
+  </div>
+</div>
+
+<div id="authView" class="state-view hidden">
+  <form id="loginForm" class="state-card">
+    <h1>Admin sign in</h1>
+    <label for="loginEmail">Email</label>
+    <input type="email" id="loginEmail" autocomplete="username" required>
+    <label for="loginPassword">Password</label>
+    <input type="password" id="loginPassword" autocomplete="current-password" required>
+    <button type="submit" id="loginBtn">Sign in</button>
+    <p class="form-error" id="loginError"></p>
+  </form>
+</div>
+
+<div id="dashboardView" class="hidden">
+  <header class="admin-header">
+    <h1>Wedding Site Admin</h1>
+    <button type="button" id="signOutBtn" class="btn-ghost">Sign out</button>
+  </header>
+
+  <main class="admin-main">
+
+    <section class="admin-section">
+      <h2>Couple &amp; Date</h2>
+      <div class="field-grid">
+        <label>Couple names (Khmer)<input type="text" id="coupleScriptKm"></label>
+        <label>Couple names (English)<input type="text" id="coupleScriptEn"></label>
+        <label>Groom's full name<input type="text" id="groomName"></label>
+        <label>Bride's full name<input type="text" id="brideName"></label>
+        <label class="field-wide">Wedding date &amp; time
+          <input type="text" id="weddingDateISO" placeholder="2026-12-26T17:00:00+07:00">
+          <span class="field-hint">Format: YYYY-MM-DDTHH:mm:ss+07:00 (Cambodia time). All dates and the countdown are computed from this automatically.</span>
+        </label>
+      </div>
+    </section>
+
+    <section class="admin-section">
+      <h2>Location</h2>
+      <div class="field-grid">
+        <label class="field-wide">Venue / map search text<input type="text" id="mapQuery"></label>
+      </div>
+    </section>
+
+    <section class="admin-section">
+      <h2>Messages</h2>
+      <div class="field-grid">
+        <label class="field-wide">Invitation message (Khmer)<textarea id="invitationMessageKm" rows="4"></textarea></label>
+        <label class="field-wide">Invitation message (English)<textarea id="invitationMessageEn" rows="4"></textarea></label>
+        <label class="field-wide">Venue text (Khmer)<textarea id="venueTextKm" rows="2"></textarea></label>
+        <label class="field-wide">Venue text (English)<textarea id="venueTextEn" rows="2"></textarea></label>
+        <label class="field-wide">Thank-you message (Khmer)<textarea id="thanksMessageKm" rows="4"></textarea></label>
+        <label class="field-wide">Thank-you message (English)<textarea id="thanksMessageEn" rows="4"></textarea></label>
+        <label class="field-wide">Footer text (Khmer)<input type="text" id="footerTextKm"></label>
+        <label class="field-wide">Footer text (English)<input type="text" id="footerTextEn"></label>
+      </div>
+    </section>
+
+    <section class="admin-section">
+      <h2>Schedule</h2>
+      <div id="scheduleRows" class="schedule-rows"></div>
+      <button type="button" id="addScheduleRow" class="btn-ghost">+ Add schedule item</button>
+    </section>
+
+    <section class="admin-section">
+      <h2>Hero Photo</h2>
+      <div class="photo-row">
+        <div class="photo-preview" id="heroPreview"></div>
+        <div>
+          <input type="file" id="heroFileInput" accept="image/*">
+          <p class="field-hint">Uploads immediately and saves on its own.</p>
+          <p class="upload-status" id="heroStatus"></p>
+        </div>
+      </div>
+    </section>
+
+    <section class="admin-section">
+      <h2>Gallery Photos</h2>
+      <div class="thumb-grid" id="galleryThumbs"></div>
+      <input type="file" id="galleryFileInput" accept="image/*" multiple>
+      <p class="field-hint">Each photo uploads and saves immediately. Removing a photo saves immediately too.</p>
+      <p class="upload-status" id="galleryStatus"></p>
+    </section>
+
+  </main>
+
+  <div class="save-bar">
+    <span class="save-status" id="saveStatus"></span>
+    <button type="button" id="saveAllBtn">Save All Changes</button>
+  </div>
+</div>
+
+<script type="module" src="js/admin.js"></script>
+</body>
+</html>
