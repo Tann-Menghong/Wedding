@@ -510,13 +510,25 @@ html[data-lang="en"] .knob { left: 16px; }
   position: fixed;
   inset: 0;
   background: rgba(0,0,0,0.85);
-  display: none;
+  display: flex;
   align-items: center;
   justify-content: center;
   z-index: 100;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.25s ease;
 }
-.lightbox.open { display: flex; }
-.lightbox-content { width: 86%; max-width: 420px; aspect-ratio: 1; border-radius: 12px; overflow: hidden; }
+.lightbox.open { opacity: 1; visibility: visible; }
+.lightbox-content {
+  width: 86%;
+  max-width: 420px;
+  aspect-ratio: 1;
+  border-radius: 12px;
+  overflow: hidden;
+  transform: scale(0.92);
+  transition: transform 0.25s ease;
+}
+.lightbox.open .lightbox-content { transform: scale(1); }
 .lightbox-close {
   position: absolute;
   top: 20px;
@@ -680,5 +692,5 @@ a, button { transition: transform 0.15s ease, box-shadow 0.15s ease, background 
   .petals-bg { display: none; }
   .splash::before, .hero-photo::before { animation: none; }
   .in-view { animation: none; }
-  a, button, .open-btn, .ornate-btn, .gallery-grid .tile { transition: none; }
+  a, button, .open-btn, .ornate-btn, .gallery-grid .tile, .lightbox, .lightbox-content { transition: none; }
 }
