@@ -339,7 +339,7 @@ html[data-lang="en"] .knob { left: 16px; }
 }
 .cd-num { font-size: 26px; font-weight: 700; line-height: 1; font-variant-numeric: tabular-nums; }
 .cd-label { font-size: 11px; opacity: 0.85; }
-.congrats-text { color: var(--gold-light); font-weight: 700; font-size: 18px; margin: 6px 0 0; }
+.congrats-text { display: none; color: var(--gold-light); font-weight: 700; font-size: 18px; margin: 6px 0 0; }
 
 /* ---------- Schedule ---------- */
 .schedule-date { text-align: center; color: var(--olive); font-size: 13px; margin: -10px 0 24px; }

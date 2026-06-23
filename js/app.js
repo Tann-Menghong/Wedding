@@ -80,7 +80,7 @@ function setLang(lang) {
     const diff = WEDDING_DATE.getTime() - Date.now();
     if (diff <= 0) {
       countdownBox.style.display = 'none';
-      congrats.textContent = 'Congratulations to the newlyweds! 🎉';
+      congrats.style.display = 'block';
       return;
     }
     const days = Math.floor(diff / 86400000);
