@@ -189,7 +189,13 @@ html[data-lang="en"] .knob { left: 16px; }
   padding: 60px 30px;
   text-align: center;
   width: 100%;
+  border: 1px solid rgba(201,162,39,0.18);
   box-shadow: 0 10px 30px rgba(0,0,0,0.06);
+  animation: frame-glow 5s ease-in-out infinite;
+}
+@keyframes frame-glow {
+  0%, 100% { box-shadow: 0 10px 30px rgba(0,0,0,0.06); }
+  50% { box-shadow: 0 10px 30px rgba(0,0,0,0.06), 0 0 40px 6px rgba(201,162,39,0.12); }
 }
 .section-label { color: var(--olive); font-weight: 700; margin: 18px 0 8px; }
 .section-label.gold { color: var(--gold); }
@@ -739,6 +745,7 @@ a:focus-visible, button:focus-visible {
   .in-view { animation: none; }
   .screen.in-view .timeline li { animation: none; }
   .nav-item.active { animation: none; }
+  .frame-card { animation: none; }
   a, button, .open-btn, .ornate-btn, .gallery-grid .tile, .lightbox, .lightbox-content { transition: none; }
   .open-btn { animation: none; }
 }
