@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="km" data-lang="km">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>តាន់ ម៉េងហុង &amp; អ៊ុក សុខា | Wedding Invitation</title>
+<meta name="description" content="Digital wedding invitation">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Ctext y='18' font-size='18'%3E%F0%9F%92%9B%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Moul&family=Battambang:wght@400;700&family=Playfair+Display:ital,wght@0,500;0,700;1,500&family=Great+Vibes&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<!-- Reusable floral ornament definitions -->
+<svg width="0" height="0" style="position:absolute">
+  <defs>
+    <g id="flower-motif">
+      <circle cx="0" cy="-10" r="8" fill="currentColor" opacity="0.9"/>
+      <circle cx="9" cy="-3" r="8" fill="currentColor" opacity="0.8"/>
+      <circle cx="6" cy="8" r="8" fill="currentColor" opacity="0.85"/>
+      <circle cx="-6" cy="8" r="8" fill="currentColor" opacity="0.8"/>
+      <circle cx="-9" cy="-3" r="8" fill="currentColor" opacity="0.85"/>
+      <circle cx="0" cy="0" r="5" fill="#e8b84b"/>
+    </g>
+    <g id="vine-motif">
+      <path d="M0,60 C10,40 0,25 18,10 C30,0 28,-15 45,-20" fill="none" stroke="currentColor" stroke-width="2"/>
+    </g>
+  </defs>
+</svg>
+
+<!-- ============ SPLASH / COVER ============ -->
+<section id="splash" class="screen splash">
+  <div class="floral-corner top-left"></div>
+  <div class="floral-corner bottom-right"></div>
+
+  <button class="lang-toggle" id="langToggle" aria-label="Switch language">
+    <span class="lang-toggle-label km">ខ្មែរ</span>
+    <span class="lang-toggle-switch"><span class="knob"></span></span>
+    <span class="lang-toggle-label en">EN</span>
+  </button>
+
+  <button class="sound-toggle" id="soundToggle" aria-label="Toggle music">
+    <svg viewBox="0 0 24 24" width="20" height="20"><path id="soundIconPath" fill="currentColor" d="M3 10v4h4l5 5V5L7 10H3zm13.5 2c0-1.77-1-3.29-2.5-4.03v8.05c1.5-.74 2.5-2.25 2.5-4.02z"/></svg>
+  </button>
+
+  <div class="splash-content">
+    <p class="monogram-mini">M &amp; S</p>
+    <h1 class="couple-script">
+      <span class="km">ម៉េងហុង &amp; សុខា</span>
+      <span class="en">Menghong &amp; Sokha</span>
+    </h1>
+    <p class="ceremony-title">
+      <span class="km">សិរីមង្គលអាពាហ៍ពិពាហ៍</span>
+      <span class="en">Holy Wedding Ceremony</span>
+    </p>
+
+    <div class="invite-line">
+      <p class="invite-to-label">
+        <span class="km">សូមគោរពអញ្ជើញ</span>
+        <span class="en">We respectfully invite</span>
+      </p>
+      <p class="invite-guest-name" id="guestName">
+        <span class="km">ភ្ញៀវកិត្តិយស</span>
+        <span class="en">Honored Guest</span>
+      </p>
+    </div>
+
+    <button class="open-btn" id="openInviteBtn">
+      <span class="km">សូមចុចដើម្បីបើកសំបុត្រ</span>
+      <span class="en">Tap to Open Invitation</span>
+    </button>
+  </div>
+</section>
+
+<!-- Everything below is revealed after tapping the envelope -->
+<div id="mainContent" class="main-content hidden">
+
+  <!-- ============ DATE BANNER ============ -->
+  <section id="cover" class="screen cover">
+    <div class="floral-corner top-left small"></div>
+    <div class="floral-corner top-right small"></div>
+    <div class="floral-corner bottom-left small"></div>
+    <div class="floral-corner bottom-right small"></div>
+
+    <div class="frame-card">
+      <p class="monogram-mini">M &amp; S</p>
+      <h2 class="couple-script small">
+        <span class="km">ម៉េងហុង &amp; សុខា</span>
+        <span class="en">Menghong &amp; Sokha</span>
+      </h2>
+      <p class="section-label">
+        <span class="km">វិធិកា</span>
+        <span class="en">Ceremony Date</span>
+      </p>
+      <div class="date-row">
+        <div class="date-box">
+          <span class="km">ថ្ងៃ សៅរ៍</span>
+          <span class="en">Saturday</span>
+        </div>
+        <div class="date-num">២៦</div>
+        <div class="date-box">
+          <span class="km">ខែធ្នូ</span>
+          <span class="en">December</span>
+        </div>
+      </div>
+      <p class="date-year">២០២៦</p>
+      <p class="date-gregorian">Saturday, 26<sup>th</sup> December 2026 — 5:00 PM</p>
+    </div>
+  </section>
+
+  <!-- ============ INVITATION DETAILS ============ -->
+  <section id="invitation" class="screen invitation">
+    <h2 class="section-title">
+      <span class="km">សិរីមង្គលអាពាហ៍ពិពាហ៍</span>
+      <span class="en">Wedding Ceremony</span>
+    </h2>
+
+    <div class="parents-row">
+      <div class="parent-col">
+        <p class="parent-name km">ឳពុកម្តាយខាងកូនប្រុស</p>
+        <p class="parent-name en">Parents of the Groom</p>
+      </div>
+      <div class="parent-col">
+        <p class="parent-name km">ឳពុកម្តាយខាងកូនស្រី</p>
+        <p class="parent-name en">Parents of the Bride</p>
+      </div>
+    </div>
+
+    <p class="section-label gold">
+      <span class="km">យើងខ្ញុំមានកិត្តិយសសូមគោរពអញ្ជើញ</span>
+      <span class="en">We Are Honored to Invite You</span>
+    </p>
+    <hr class="ornament-divider">
+
+    <p class="invitation-message km">
+      សម្តេច ទ្រង់ ឯកឧត្តម លោកជំទាវ លោកអ្នកឧកញ៉ា អ្នកឧកញ៉ា ឧកញ៉ា លោក លោកស្រី អ្នកនាង កញ្ញា
+      ព្រមទាំងប្រិយមិត្តអញ្ជើញចូលរួមជាអធិបតី និងជាភ្ញៀវកិត្តិយស ដើម្បីប្រសិទ្ធិពរជ័យសិរីសួស្តី
+      ជ័យមង្គល ក្នុងពិធីអាពាហ៍ពិពាហ៍ កូនប្រុសស្រី របស់យើងខ្ញុំទាំងពីរ។
+    </p>
+    <p class="invitation-message en">
+      Your Excellency, Oknha, Madam, Ladies and Gentlemen, please join us as the presiding
+      officers and guests of honor to bestow blessings on our two weddings.
+    </p>
+
+    <div class="couple-names-row">
+      <div class="couple-col">
+        <p class="couple-label km">កូនប្រុសនាម</p>
+        <p class="couple-label en">Groom</p>
+        <p class="couple-name-text">តាន់ ម៉េងហុង</p>
+      </div>
+      <p class="monogram-mini center">M &amp; S</p>
+      <div class="couple-col">
+        <p class="couple-label km">កូនស្រីនាម</p>
+        <p class="couple-label en">Bride</p>
+        <p class="couple-name-text">អ៊ុក សុខា</p>
+      </div>
+    </div>
+
+    <p class="section-label">
+      <span class="km">វិធិកា</span>
+      <span class="en">Ceremony Date</span>
+    </p>
+    <div class="date-row small">
+      <div class="date-box"><span class="km">ថ្ងៃ សៅរ៍</span><span class="en">Saturday</span></div>
+      <div class="date-num small">២៦</div>
+      <div class="date-box"><span class="km">ខែធ្នូ</span><span class="en">December</span></div>
+    </div>
+    <p class="date-year small">២០២៦</p>
+
+    <p class="venue-text km">
+      ស្ថិតនៅ ភូមិទួលដំណាក់<br>
+      សូមអញ្ជើញចូលរួមអបអរសាទរជាមួយយើងខ្ញុំ
+    </p>
+    <p class="venue-text en">
+      Held at Tuol Domnak Village.<br>
+      We look forward to celebrating with you.
+    </p>
+
+    <div class="cta-row">
+      <button class="ornate-btn" id="addCalendarBtn">
+        <span class="km">តាក់ស្ទួចទុកក្នុងប្រតិទិន</span>
+        <span class="en">Add to Calendar</span>
+      </button>
+    </div>
+  </section>
+
+  <!-- ============ COUPLE HERO + COUNTDOWN ============ -->
+  <section id="hero-photo" class="screen hero-photo">
+    <div class="photo-placeholder hero-img">
+      <svg viewBox="0 0 24 24" width="40" height="40"><path fill="currentColor" d="M12 17.27 18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+      <p class="km">រូបភាពគូស្នេហ៍ — ដាក់រូបភាពពិតរបស់អ្នកនៅទីនេះ</p>
+      <p class="en">Couple Photo — replace with your own image</p>
+    </div>
+    <div class="hero-overlay">
+      <p class="countdown-label">
+        <span class="km">ពិធីខួបអាពាហ៍ពិពាហ៍ឆ្នាំ</span>
+        <span class="en">Event Countdown</span>
+      </p>
+      <div class="countdown" id="countdown">
+        <div class="cd-unit"><span class="cd-num" id="cdDays">00</span><span class="cd-label km">ថ្ងៃ</span><span class="cd-label en">Days</span></div>
+        <div class="cd-unit"><span class="cd-num" id="cdHours">00</span><span class="cd-label km">ម៉ោង</span><span class="cd-label en">Hours</span></div>
+        <div class="cd-unit"><span class="cd-num" id="cdMinutes">00</span><span class="cd-label km">នាទី</span><span class="cd-label en">Mins</span></div>
+        <div class="cd-unit"><span class="cd-num" id="cdSeconds">00</span><span class="cd-label km">វិនាទី</span><span class="cd-label en">Secs</span></div>
+      </div>
+      <p class="congrats-text" id="congratsText">Congratulations!</p>
+    </div>
+  </section>
+
+  <!-- ============ SCHEDULE ============ -->
+  <section id="schedule" class="screen schedule">
+    <h2 class="section-title">
+      <span class="km">របៀបវារៈកម្មវិធី</span>
+      <span class="en">Wedding Agenda</span>
+    </h2>
+    <p class="schedule-date km">កម្មវិធីថ្ងៃសៅរ៍ ទី២៦ ខែធ្នូ ឆ្នាំ២០២៦</p>
+    <p class="schedule-date en">Saturday, 26th December 2026</p>
+
+    <ol class="timeline" id="timeline">
+      <li><span class="time km">០៦:00 ព្រឹក</span><span class="time en">6:00 AM</span><p class="km">ជួបជុំភ្ញៀវកិត្តិយស ដើម្បីរៀបចំហែលជង្គង</p><p class="en">Guests gather to prepare the procession</p></li>
+      <li><span class="time km">០៧:00 ព្រឹក</span><span class="time en">7:00 AM</span><p class="km">ពិធីហែលជង្គង (កម្សាន្ត)</p><p class="en">Procession ceremony</p></li>
+      <li><span class="time km">០៧:30 ព្រឹក</span><span class="time en">7:30 AM</span><p class="km">ពិធីចូលជូនដំណឹងការ រាប់ផ្លៃលី</p><p class="en">Ceremony of presenting to parents</p></li>
+      <li><span class="time km">០៨:30 ព្រឹក</span><span class="time en">8:30 AM</span><p class="km">ពិធីបំពាក់ចិញ្ជៀង</p><p class="en">Ring ceremony</p></li>
+      <li><span class="time km">០៩:45 ព្រឹក</span><span class="time en">9:45 AM</span><p class="km">ពិធីកាត់សក់បង្កក់ស្រី</p><p class="en">Hair-cutting ceremony</p></li>
+      <li><span class="time km">១០:30 ព្រឹក</span><span class="time en">10:30 AM</span><p class="km">ពិធីបង្វិលពពិល សំពះថ្វាយសែនជង្ហែរ</p><p class="en">Candle-circling ceremony</p></li>
+      <li><span class="time km">១១:30 ព្រឹក</span><span class="time en">11:30 AM</span><p class="km">អញ្ជើញភ្ញៀវពិសាអាហារថ្ងៃត្រង់</p><p class="en">Lunch reception for guests</p></li>
+      <li><span class="time km">០៥:00 ល្ងាច</span><span class="time en">5:00 PM</span><p class="km">អញ្ជើញភ្ញៀវកិត្តិយសពិសាគោជដាហារ</p><p class="en">Evening dinner reception</p></li>
+    </ol>
+  </section>
+
+  <!-- ============ LOCATION / MAP ============ -->
+  <section id="location" class="screen location">
+    <h2 class="section-title">
+      <span class="km">ទីតាំងកម្មវិធី</span>
+      <span class="en">Event Location</span>
+    </h2>
+
+    <div class="map-embed">
+      <iframe
+        title="Event location map"
+        src="https://www.google.com/maps?q=ភូមិទួលដំណាក់,Cambodia&output=embed"
+        loading="lazy"
+        referrerpolicy="no-referrer-when-downgrade">
+      </iframe>
+    </div>
+    <p class="map-note km">* ទីតាំងប្រហែល សូមកែតម្រូវភ្ជាប់ទីតាំងពិតប្រាកដនៅក្នុងឯកសារ README ប្រសិនបើត្រូវការ</p>
+    <p class="map-note en">* Approximate pin for the village — refine with the exact location in the README if needed</p>
+
+    <button class="ornate-btn" id="openMapsBtn">
+      <span class="km">បើកមើលក្នុង Google Map</span>
+      <span class="en">Open in Google Maps</span>
+    </button>
+
+    <div class="qr-block">
+      <canvas id="mapQr" width="160" height="160"></canvas>
+      <p class="qr-caption km">QR ទីតាំង</p>
+      <p class="qr-caption en">QR Location</p>
+    </div>
+  </section>
+
+  <!-- ============ GALLERY ============ -->
+  <section id="gallery" class="screen gallery">
+    <h2 class="section-title">
+      <span class="km">កម្រងរូបភាព</span>
+      <span class="en">Photos</span>
+    </h2>
+    <div class="gallery-grid" id="galleryGrid">
+      <!-- 6 placeholder tiles, generated by app.js -->
+    </div>
+  </section>
+
+  <!-- ============ GIFT / KHQR ============ -->
+  <section id="gift" class="screen gift">
+    <h2 class="section-title">
+      <span class="km">សូមអរគុណ និងសូមអភ័យទោស</span>
+      <span class="en">Our Gratitude and Apology</span>
+    </h2>
+    <p class="thanks-message km">
+      យើងខ្ញុំទាំងពីរ សូមថ្លែងអំណរគុណ យ៉ាងជ្រាលជ្រៅ ចំពោះវត្តមាន ដ៏ឧត្តុង្គឧត្តមរបស់ សម្តេច ឯកឧត្តម
+      លោកជំទាវ លោកអ្នកឧកញ៉ា អ្នកឧកញ៉ា ឧកញ៉ា លោក លោកស្រី អ្នកនាង កញ្ញា ដែលបាន អញ្ជើញចូលរួមជាកិត្តិយស
+      ក្នុងពិធីសិរីសួស្តីអាពាហ៍ពិពាហ៍ របស់យើងខ្ញុំ នាពេលខាងមុខនេះ។ យើងខ្ញុំសូមការខន្តីអភ័យទោស
+      ដែលពុំបានជូនលិខិតអញ្ជើញ ដោយផ្ទាល់។ ដោយការវកិច្ចដ៏ខ្ពង់ខ្ពស់ពីយើងខ្ញុំ។
+    </p>
+    <p class="thanks-message en">
+      We are extremely thankful for H.E., L.C.T., Okhna, ladies and gentlemen for your presence
+      in the upcoming marriage of our children. We would like to apologize if this invitation
+      has not been personally delivered by us.
+    </p>
+
+    <p class="section-label gold">
+      <span class="km">ចងដៃតាមរយៈ KHQR</span>
+      <span class="en">Gift via KHQR</span>
+    </p>
+
+    <div class="currency-toggle">
+      <button class="currency-btn active" data-currency="USD">USD</button>
+      <button class="currency-btn" data-currency="KHR"><span class="km">រៀល</span><span class="en">Riel</span></button>
+    </div>
+    <p class="scan-pay">Scan. Pay. Done.</p>
+
+    <div class="qr-block">
+      <canvas id="giftQr" width="180" height="180"></canvas>
+      <p class="qr-caption km">គំរូ QR — ជំនួសវាដោយ KHQR ពិតរបស់អ្នក</p>
+      <p class="qr-caption en">Sample QR Code — replace with your real KHQR</p>
+    </div>
+  </section>
+
+  <!-- ============ WISHES / GUESTBOOK ============ -->
+  <section id="wishes" class="screen wishes">
+    <h2 class="section-title">
+      <span class="km">សារជូនពរ</span>
+      <span class="en">Send Us Your Wishes</span>
+    </h2>
+
+    <form id="wishForm" class="wish-form">
+      <p class="rsvp-label">
+        <span class="km">បញ្ជាក់ពីវត្តមានអ្នក</span>
+        <span class="en">Confirm your attendance</span>
+      </p>
+      <div class="rsvp-toggle" id="rsvpToggle" role="radiogroup" aria-label="Confirm attendance">
+        <button type="button" class="rsvp-btn" data-attending="yes">
+          <span aria-hidden="true">✓</span>
+          <span class="km">ចូលរួម</span>
+          <span class="en">Yes</span>
+        </button>
+        <button type="button" class="rsvp-btn" data-attending="no">
+          <span aria-hidden="true">✗</span>
+          <span class="km">បដិសេធ</span>
+          <span class="en">No</span>
+        </button>
+      </div>
+      <input type="text" id="wishName" maxlength="50" placeholder="ឈ្មោះរបស់អ្នក / Your name" required>
+      <textarea id="wishMessage" maxlength="300" rows="3" placeholder="សារជូនពរ / Your wishes..." required></textarea>
+      <button type="submit" id="wishSubmitBtn">
+        <span class="km">ផ្ញើសារ</span>
+        <span class="en">Send</span>
+      </button>
+      <p class="wish-status" id="wishStatus"></p>
+    </form>
+
+    <div class="wish-list" id="wishList">
+      <p class="wish-empty km">សូមជាអ្នកដំបូងផ្ញើសារជូនពរ!</p>
+      <p class="wish-empty en">Be the first to send your wishes!</p>
+    </div>
+  </section>
+
+  <footer class="site-footer">
+    <p class="km">សូមអរគុណចំពោះការអញ្ជើញចូលរួមជាមួយយើងខ្ញុំ 🤍</p>
+    <p class="en">Thank you for celebrating with us 🤍</p>
+  </footer>
+</div>
+
+<!-- ============ STICKY BOTTOM NAV ============ -->
+<nav class="bottom-nav" id="bottomNav">
+  <a href="#splash" data-target="splash" class="nav-item active" aria-label="Home">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path fill="currentColor" d="M12 3 2 12h3v8h6v-6h2v6h6v-8h3z"/></svg>
+  </a>
+  <a href="#schedule" data-target="schedule" class="nav-item" aria-label="Schedule">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path fill="currentColor" d="M19 4h-1V2h-2v2H8V2H6v2H5c-1.11 0-1.99.9-1.99 2L3 20a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6c0-1.1-.9-2-2-2zm0 16H5V9h14v11z"/></svg>
+  </a>
+  <a href="#location" data-target="location" class="nav-item" aria-label="Location">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path fill="currentColor" d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5A2.5 2.5 0 1 1 12 6.5a2.5 2.5 0 0 1 0 5z"/></svg>
+  </a>
+  <a href="#gallery" data-target="gallery" class="nav-item" aria-label="Gallery">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path fill="currentColor" d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"/></svg>
+  </a>
+  <a href="#wishes" data-target="wishes" class="nav-item" aria-label="Wishes">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path fill="currentColor" d="M20 2H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h14l4 4V4c0-1.1-.9-2-2-2z"/></svg>
+  </a>
+</nav>
+
+<button class="scroll-top" id="scrollTopBtn" aria-label="Scroll to top">
+  <svg viewBox="0 0 24 24" width="22" height="22"><path fill="currentColor" d="M12 8l-6 6 1.41 1.41L12 10.83l4.59 4.58L18 14z"/></svg>
+</button>
+
+<!-- Lightbox modal -->
+<div class="lightbox" id="lightbox">
+  <button class="lightbox-close" id="lightboxClose" aria-label="Close">&times;</button>
+  <div class="lightbox-content" id="lightboxContent"></div>
+</div>
+
+<audio id="bgMusic" loop preload="none">
+  <!-- Add your own audio file path here, e.g. <source src="assets/music.mp3" type="audio/mpeg"> -->
+</audio>
+
+<script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.3/build/qrcode.min.js"></script>
+<script type="module" src="js/wishes.js"></script>
+<script src="js/app.js"></script>
+</body>
+</html>
