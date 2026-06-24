@@ -11,6 +11,8 @@ function setLang(lang) {
   document.documentElement.setAttribute('data-lang', lang);
   document.documentElement.setAttribute('lang', lang);
   localStorage.setItem('wedding-lang', lang);
+  const toggle = document.getElementById('langToggle');
+  if (toggle) toggle.setAttribute('aria-checked', String(lang === 'en'));
 }
 (function initLang() {
   const saved = localStorage.getItem('wedding-lang') || 'km';
