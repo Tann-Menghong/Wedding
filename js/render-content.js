@@ -82,7 +82,7 @@ function buildGallery(urls) {
   return true;
 }
 
-function setHeroPhoto(url) {
+function setHeroPhoto(url, groomName, brideName) {
   if (!url) return;
   const placeholder = document.querySelector('.hero-img');
   if (!placeholder) return;
@@ -90,7 +90,10 @@ function setHeroPhoto(url) {
   placeholder.classList.add('has-photo');
   const img = document.createElement('img');
   img.src = url;
-  img.alt = '';
+  // This is the couple's own photo, not decoration, so it needs a real
+  // accessible name -- unlike gallery tiles, nothing else on the page
+  // labels it for screen-reader users.
+  img.alt = groomName && brideName ? `${groomName} & ${brideName}` : 'Couple Photo / រូបភាពគូស្នេហ៍';
   img.className = 'hero-photo-img';
   placeholder.appendChild(img);
 }
@@ -122,7 +125,7 @@ function setHeroPhoto(url) {
 
   buildTimeline(content.schedule);
   const hadGallery = buildGallery(content.gallery);
-  setHeroPhoto(content.heroPhotoUrl);
+  setHeroPhoto(content.heroPhotoUrl, content.groomName, content.brideName);
 
   const mapsLinkUrl = `https://www.google.com/maps?q=${encodeURIComponent(content.mapQuery)}`;
   const mapsEmbedUrl = `${mapsLinkUrl}&output=embed`;
