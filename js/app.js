@@ -1,14 +1,18 @@
 // ============ Config ============
-const WEDDING_DATE = new Date('2026-12-26T17:00:00+07:00');
+// These are reassigned by the wedding:content-ready listener below once
+// js/render-content.js resolves the (possibly Firebase-backed) site content.
+let WEDDING_DATE = new Date('2026-12-26T17:00:00+07:00');
 const WEDDING_TITLE = 'Wedding of Tann Menghong & Ouk Sokha';
-const VENUE_TEXT = 'Tuol Domnak Village, Cambodia';
-const MAPS_URL = `https://www.google.com/maps?q=${encodeURIComponent('ភូមិទួលដំណាក់, Cambodia')}`;
+let VENUE_TEXT = 'Tuol Domnak Village, Cambodia';
+let MAPS_URL = `https://www.google.com/maps?q=${encodeURIComponent('ភូមិទួលដំណាក់, Cambodia')}`;
 
 // ============ Language toggle ============
 function setLang(lang) {
   document.documentElement.setAttribute('data-lang', lang);
   document.documentElement.setAttribute('lang', lang);
   localStorage.setItem('wedding-lang', lang);
+  const toggle = document.getElementById('langToggle');
+  if (toggle) toggle.setAttribute('aria-checked', String(lang === 'en'));
 }
 (function initLang() {
   const saved = localStorage.getItem('wedding-lang') || 'km';
@@ -78,7 +82,7 @@ function setLang(lang) {
     const diff = WEDDING_DATE.getTime() - Date.now();
     if (diff <= 0) {
       countdownBox.style.display = 'none';
-      congrats.textContent = 'Congratulations to the newlyweds! 🎉';
+      congrats.style.display = 'block';
       return;
     }
     const days = Math.floor(diff / 86400000);
@@ -134,9 +138,13 @@ function setLang(lang) {
 })();
 
 // ============ QR codes (location + gift placeholder) ============
-(function initQrCodes() {
+function redrawMapQr() {
   if (typeof QRCode === 'undefined') return;
   QRCode.toCanvas(document.getElementById('mapQr'), MAPS_URL, { width: 160, margin: 1 }, () => {});
+}
+(function initQrCodes() {
+  if (typeof QRCode === 'undefined') return;
+  redrawMapQr();
   QRCode.toCanvas(
     document.getElementById('giftQr'),
     'Sample placeholder QR. Replace with your own KHQR image from your bank app.',
@@ -144,6 +152,15 @@ function setLang(lang) {
     () => {}
   );
 })();
+
+// ============ Apply dynamic content once render-content.js resolves it ============
+document.addEventListener('wedding:content-ready', (e) => {
+  const { weddingDate, venueText, mapsUrl } = e.detail;
+  if (weddingDate && !isNaN(weddingDate.getTime())) WEDDING_DATE = weddingDate;
+  if (venueText) VENUE_TEXT = venueText.en || VENUE_TEXT;
+  if (mapsUrl) MAPS_URL = mapsUrl;
+  redrawMapQr();
+});
 
 // ============ Currency toggle (display only) ============
 (function initCurrencyToggle() {
@@ -160,29 +177,67 @@ function setLang(lang) {
   const grid = document.getElementById('galleryGrid');
   const lightbox = document.getElementById('lightbox');
   const content = document.getElementById('lightboxContent');
+  const lightboxCloseBtn = document.getElementById('lightboxClose');
   const TILE_COUNT = 6;
 
   for (let i = 0; i < TILE_COUNT; i++) {
     const tile = document.createElement('div');
     tile.className = 'tile';
+    tile.setAttribute('role', 'button');
+    tile.setAttribute('tabindex', '0');
+    tile.setAttribute('aria-label', 'View photo placeholder / មើលរូបភាពគំរូ');
     tile.innerHTML = `<svg viewBox="0 0 24 24" width="28" height="28"><path fill="currentColor" d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"/></svg>`;
-    tile.addEventListener('click', () => {
+    const openTile = () => {
       content.innerHTML = tile.innerHTML;
       content.style.display = 'flex';
       content.style.alignItems = 'center';
       content.style.justifyContent = 'center';
       content.style.background = 'linear-gradient(160deg, #efd9c4, #cbb59f)';
       content.style.color = '#fff';
-      lightbox.classList.add('open');
+      openLightbox(tile);
+    };
+    tile.addEventListener('click', openTile);
+    tile.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        openTile();
+      }
     });
     grid.appendChild(tile);
   }
 
-  document.getElementById('lightboxClose').addEventListener('click', () => {
+  // Moves focus into the modal on open and back to the triggering tile on
+  // close, since a lightbox that just appears visually leaves keyboard and
+  // screen-reader users stranded on a tile underneath it.
+  function openLightbox(triggerEl) {
+    lightbox._triggerEl = triggerEl;
+    lightbox.classList.add('open');
+    lightboxCloseBtn.focus();
+  }
+  window.openLightbox = openLightbox;
+
+  function closeLightbox() {
+    if (!lightbox.classList.contains('open')) return;
     lightbox.classList.remove('open');
-  });
+    const trigger = lightbox._triggerEl;
+    lightbox._triggerEl = null;
+    if (trigger && typeof trigger.focus === 'function') trigger.focus();
+  }
+
+  lightboxCloseBtn.addEventListener('click', closeLightbox);
   lightbox.addEventListener('click', (e) => {
-    if (e.target === lightbox) lightbox.classList.remove('open');
+    if (e.target === lightbox) closeLightbox();
+  });
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') closeLightbox();
+  });
+  // The close button is the only focusable element inside the dialog, so
+  // Tab/Shift+Tab should simply keep focus pinned there while it's open.
+  lightbox.addEventListener('keydown', (e) => {
+    if (e.key === 'Tab') {
+      e.preventDefault();
+      lightboxCloseBtn.focus();
+    }
   });
 })();
 
@@ -224,4 +279,60 @@ function setLang(lang) {
   btn.addEventListener('click', () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   });
+})();
+
+// ============ Falling petals background ============
+(function initPetals() {
+  if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  const bg = document.createElement('div');
+  bg.className = 'petals-bg';
+  bg.setAttribute('aria-hidden', 'true');
+  const PETAL_COUNT = 16;
+  for (let i = 0; i < PETAL_COUNT; i++) {
+    const isFlower = i % 4 === 0;
+    const petal = isFlower
+      ? (() => {
+          const svgNS = 'http://www.w3.org/2000/svg';
+          const svg = document.createElementNS(svgNS, 'svg');
+          svg.setAttribute('viewBox', '-12 -16 24 32');
+          svg.classList.add('petal', 'petal-flower');
+          const use = document.createElementNS(svgNS, 'use');
+          use.setAttribute('href', '#flower-motif');
+          svg.appendChild(use);
+          return svg;
+        })()
+      : document.createElement('span');
+    if (!isFlower) petal.className = `petal petal-${(i % 4) + 1}`;
+    const left = Math.random() * 100;
+    const duration = 11 + Math.random() * 10;
+    const delay = Math.random() * -20;
+    const drift = (Math.random() * 80 - 40).toFixed(0);
+    const size = (isFlower ? 14 + Math.random() * 8 : 10 + Math.random() * 10).toFixed(0);
+    petal.style.left = `${left}%`;
+    petal.style.width = `${size}px`;
+    petal.style.height = `${size}px`;
+    petal.style.animationDuration = `${duration}s, ${(3 + Math.random() * 3).toFixed(1)}s`;
+    petal.style.animationDelay = `${delay}s, ${delay}s`;
+    petal.style.setProperty('--drift', `${drift}px`);
+    bg.appendChild(petal);
+  }
+  document.body.appendChild(bg);
+})();
+
+// ============ Scroll-reveal fade-in for sections ============
+(function initScrollReveal() {
+  const targets = document.querySelectorAll('.screen, .site-footer');
+  if (!('IntersectionObserver' in window) || !targets.length) {
+    targets.forEach(t => t.classList.add('in-view'));
+    return;
+  }
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('in-view');
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.12 });
+  targets.forEach(t => observer.observe(t));
 })();

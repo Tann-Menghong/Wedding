@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>តាន់ ម៉េងហុង &amp; អ៊ុក សុខា | Wedding Invitation</title>
 <meta name="description" content="Digital wedding invitation">
+<meta name="theme-color" content="#fdf6f0">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Ctext y='18' font-size='18'%3E%F0%9F%92%9B%3C/text%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -35,19 +36,22 @@
   <div class="floral-corner top-left"></div>
   <div class="floral-corner bottom-right"></div>
 
-  <button class="lang-toggle" id="langToggle" aria-label="Switch language">
+  <button class="lang-toggle" id="langToggle" role="switch" aria-checked="false" aria-label="Switch language">
     <span class="lang-toggle-label km">ខ្មែរ</span>
     <span class="lang-toggle-switch"><span class="knob"></span></span>
     <span class="lang-toggle-label en">EN</span>
   </button>
 
   <button class="sound-toggle" id="soundToggle" aria-label="Toggle music">
-    <svg viewBox="0 0 24 24" width="20" height="20"><path id="soundIconPath" fill="currentColor" d="M3 10v4h4l5 5V5L7 10H3zm13.5 2c0-1.77-1-3.29-2.5-4.03v8.05c1.5-.74 2.5-2.25 2.5-4.02z"/></svg>
+    <svg viewBox="0 0 24 24" width="20" height="20">
+      <path id="soundIconPath" fill="currentColor" d="M3 10v4h4l5 5V5L7 10H3zm13.5 2c0-1.77-1-3.29-2.5-4.03v8.05c1.5-.74 2.5-2.25 2.5-4.02z"/>
+      <line class="mute-slash" x1="2.5" y1="20.5" x2="20.5" y2="2.5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+    </svg>
   </button>
 
   <div class="splash-content">
     <p class="monogram-mini">M &amp; S</p>
-    <h1 class="couple-script">
+    <h1 class="couple-script" data-content="coupleScript">
       <span class="km">ម៉េងហុង &amp; សុខា</span>
       <span class="en">Menghong &amp; Sokha</span>
     </h1>
@@ -86,7 +90,7 @@
 
     <div class="frame-card">
       <p class="monogram-mini">M &amp; S</p>
-      <h2 class="couple-script small">
+      <h2 class="couple-script small" data-content="coupleScript">
         <span class="km">ម៉េងហុង &amp; សុខា</span>
         <span class="en">Menghong &amp; Sokha</span>
       </h2>
@@ -95,18 +99,18 @@
         <span class="en">Ceremony Date</span>
       </p>
       <div class="date-row">
-        <div class="date-box">
+        <div class="date-box" data-content="dateWeekday">
           <span class="km">ថ្ងៃ សៅរ៍</span>
           <span class="en">Saturday</span>
         </div>
-        <div class="date-num">២៦</div>
-        <div class="date-box">
+        <div class="date-num" data-content="dateNum">២៦</div>
+        <div class="date-box" data-content="dateMonth">
           <span class="km">ខែធ្នូ</span>
           <span class="en">December</span>
         </div>
       </div>
-      <p class="date-year">២០២៦</p>
-      <p class="date-gregorian">Saturday, 26<sup>th</sup> December 2026 — 5:00 PM</p>
+      <p class="date-year" data-content="dateYear">២០២៦</p>
+      <p class="date-gregorian" data-content="dateGregorian">Saturday, 26<sup>th</sup> December 2026 — 5:00 PM</p>
     </div>
   </section>
 
@@ -134,27 +138,29 @@
     </p>
     <hr class="ornament-divider">
 
-    <p class="invitation-message km">
-      សម្តេច ទ្រង់ ឯកឧត្តម លោកជំទាវ លោកអ្នកឧកញ៉ា អ្នកឧកញ៉ា ឧកញ៉ា លោក លោកស្រី អ្នកនាង កញ្ញា
-      ព្រមទាំងប្រិយមិត្តអញ្ជើញចូលរួមជាអធិបតី និងជាភ្ញៀវកិត្តិយស ដើម្បីប្រសិទ្ធិពរជ័យសិរីសួស្តី
-      ជ័យមង្គល ក្នុងពិធីអាពាហ៍ពិពាហ៍ កូនប្រុសស្រី របស់យើងខ្ញុំទាំងពីរ។
-    </p>
-    <p class="invitation-message en">
-      Your Excellency, Oknha, Madam, Ladies and Gentlemen, please join us as the presiding
-      officers and guests of honor to bestow blessings on our two weddings.
-    </p>
+    <div data-content="invitationMessage">
+      <p class="invitation-message km">
+        សម្តេច ទ្រង់ ឯកឧត្តម លោកជំទាវ លោកអ្នកឧកញ៉ា អ្នកឧកញ៉ា ឧកញ៉ា លោក លោកស្រី អ្នកនាង កញ្ញា
+        ព្រមទាំងប្រិយមិត្តអញ្ជើញចូលរួមជាអធិបតី និងជាភ្ញៀវកិត្តិយស ដើម្បីប្រសិទ្ធិពរជ័យសិរីសួស្តី
+        ជ័យមង្គល ក្នុងពិធីអាពាហ៍ពិពាហ៍ កូនប្រុសស្រី របស់យើងខ្ញុំទាំងពីរ។
+      </p>
+      <p class="invitation-message en">
+        Your Excellency, Oknha, Madam, Ladies and Gentlemen, please join us as the presiding
+        officers and guests of honor to bestow blessings on our two weddings.
+      </p>
+    </div>
 
     <div class="couple-names-row">
       <div class="couple-col">
         <p class="couple-label km">កូនប្រុសនាម</p>
         <p class="couple-label en">Groom</p>
-        <p class="couple-name-text">តាន់ ម៉េងហុង</p>
+        <p class="couple-name-text" data-content="groomName">តាន់ ម៉េងហុង</p>
       </div>
       <p class="monogram-mini center">M &amp; S</p>
       <div class="couple-col">
         <p class="couple-label km">កូនស្រីនាម</p>
         <p class="couple-label en">Bride</p>
-        <p class="couple-name-text">អ៊ុក សុខា</p>
+        <p class="couple-name-text" data-content="brideName">អ៊ុក សុខា</p>
       </div>
     </div>
 
@@ -163,23 +169,22 @@
       <span class="en">Ceremony Date</span>
     </p>
     <div class="date-row small">
-      <div class="date-box"><span class="km">ថ្ងៃ សៅរ៍</span><span class="en">Saturday</span></div>
-      <div class="date-num small">២៦</div>
-      <div class="date-box"><span class="km">ខែធ្នូ</span><span class="en">December</span></div>
+      <div class="date-box" data-content="dateWeekday"><span class="km">ថ្ងៃ សៅរ៍</span><span class="en">Saturday</span></div>
+      <div class="date-num small" data-content="dateNum">២៦</div>
+      <div class="date-box" data-content="dateMonth"><span class="km">ខែធ្នូ</span><span class="en">December</span></div>
     </div>
-    <p class="date-year small">២០២៦</p>
+    <p class="date-year small" data-content="dateYear">២០២៦</p>
 
-    <p class="venue-text km">
-      ស្ថិតនៅ ភូមិទួលដំណាក់<br>
-      សូមអញ្ជើញចូលរួមអបអរសាទរជាមួយយើងខ្ញុំ
-    </p>
-    <p class="venue-text en">
-      Held at Tuol Domnak Village.<br>
-      We look forward to celebrating with you.
-    </p>
+    <div data-content="venueText">
+      <p class="venue-text km">ស្ថិតនៅ ភូមិទួលដំណាក់
+សូមអញ្ជើញចូលរួមអបអរសាទរជាមួយយើងខ្ញុំ</p>
+      <p class="venue-text en">Held at Tuol Domnak Village.
+We look forward to celebrating with you.</p>
+    </div>
 
     <div class="cta-row">
       <button class="ornate-btn" id="addCalendarBtn">
+        <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path fill="currentColor" d="M19 4h-1V2h-2v2H8V2H6v2H5c-1.11 0-1.99.9-1.99 2L3 20a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6c0-1.1-.9-2-2-2zm0 16H5V9h14v11zm0-13H5V6h14v1z"/></svg>
         <span class="km">តាក់ស្ទួចទុកក្នុងប្រតិទិន</span>
         <span class="en">Add to Calendar</span>
       </button>
@@ -204,7 +209,10 @@
         <div class="cd-unit"><span class="cd-num" id="cdMinutes">00</span><span class="cd-label km">នាទី</span><span class="cd-label en">Mins</span></div>
         <div class="cd-unit"><span class="cd-num" id="cdSeconds">00</span><span class="cd-label km">វិនាទី</span><span class="cd-label en">Secs</span></div>
       </div>
-      <p class="congrats-text" id="congratsText">Congratulations!</p>
+      <p class="congrats-text" id="congratsText">
+        <span class="km">សូមអបអរសាទរ! 🎉</span>
+        <span class="en">Congratulations to the newlyweds! 🎉</span>
+      </p>
     </div>
   </section>
 
@@ -214,8 +222,10 @@
       <span class="km">របៀបវារៈកម្មវិធី</span>
       <span class="en">Wedding Agenda</span>
     </h2>
-    <p class="schedule-date km">កម្មវិធីថ្ងៃសៅរ៍ ទី២៦ ខែធ្នូ ឆ្នាំ២០២៦</p>
-    <p class="schedule-date en">Saturday, 26th December 2026</p>
+    <div data-content="scheduleDate">
+      <p class="schedule-date km">កម្មវិធីថ្ងៃសៅរ៍ ទី២៦ ខែធ្នូ ឆ្នាំ២០២៦</p>
+      <p class="schedule-date en">Saturday, 26th December 2026</p>
+    </div>
 
     <ol class="timeline" id="timeline">
       <li><span class="time km">០៦:00 ព្រឹក</span><span class="time en">6:00 AM</span><p class="km">ជួបជុំភ្ញៀវកិត្តិយស ដើម្បីរៀបចំហែលជង្គង</p><p class="en">Guests gather to prepare the procession</p></li>
@@ -244,10 +254,11 @@
         referrerpolicy="no-referrer-when-downgrade">
       </iframe>
     </div>
-    <p class="map-note km">* ទីតាំងប្រហែល សូមកែតម្រូវភ្ជាប់ទីតាំងពិតប្រាកដនៅក្នុងឯកសារ README ប្រសិនបើត្រូវការ</p>
-    <p class="map-note en">* Approximate pin for the village — refine with the exact location in the README if needed</p>
+    <p class="map-note km">* ទីតាំងលើផែនទីគឺប្រហែល សូមទាក់ទងមកយើងខ្ញុំ ប្រសិនបើអ្នកត្រូវការទិសដៅពិតប្រាកដ</p>
+    <p class="map-note en">* Map pin is approximate — please contact us directly if you need exact directions</p>
 
     <button class="ornate-btn" id="openMapsBtn">
+      <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path fill="currentColor" d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5A2.5 2.5 0 1 1 12 6.5a2.5 2.5 0 0 1 0 5z"/></svg>
       <span class="km">បើកមើលក្នុង Google Map</span>
       <span class="en">Open in Google Maps</span>
     </button>
@@ -276,17 +287,19 @@
       <span class="km">សូមអរគុណ និងសូមអភ័យទោស</span>
       <span class="en">Our Gratitude and Apology</span>
     </h2>
-    <p class="thanks-message km">
-      យើងខ្ញុំទាំងពីរ សូមថ្លែងអំណរគុណ យ៉ាងជ្រាលជ្រៅ ចំពោះវត្តមាន ដ៏ឧត្តុង្គឧត្តមរបស់ សម្តេច ឯកឧត្តម
-      លោកជំទាវ លោកអ្នកឧកញ៉ា អ្នកឧកញ៉ា ឧកញ៉ា លោក លោកស្រី អ្នកនាង កញ្ញា ដែលបាន អញ្ជើញចូលរួមជាកិត្តិយស
-      ក្នុងពិធីសិរីសួស្តីអាពាហ៍ពិពាហ៍ របស់យើងខ្ញុំ នាពេលខាងមុខនេះ។ យើងខ្ញុំសូមការខន្តីអភ័យទោស
-      ដែលពុំបានជូនលិខិតអញ្ជើញ ដោយផ្ទាល់។ ដោយការវកិច្ចដ៏ខ្ពង់ខ្ពស់ពីយើងខ្ញុំ។
-    </p>
-    <p class="thanks-message en">
-      We are extremely thankful for H.E., L.C.T., Okhna, ladies and gentlemen for your presence
-      in the upcoming marriage of our children. We would like to apologize if this invitation
-      has not been personally delivered by us.
-    </p>
+    <div data-content="thanksMessage">
+      <p class="thanks-message km">
+        យើងខ្ញុំទាំងពីរ សូមថ្លែងអំណរគុណ យ៉ាងជ្រាលជ្រៅ ចំពោះវត្តមាន ដ៏ឧត្តុង្គឧត្តមរបស់ សម្តេច ឯកឧត្តម
+        លោកជំទាវ លោកអ្នកឧកញ៉ា អ្នកឧកញ៉ា ឧកញ៉ា លោក លោកស្រី អ្នកនាង កញ្ញា ដែលបាន អញ្ជើញចូលរួមជាកិត្តិយស
+        ក្នុងពិធីសិរីសួស្តីអាពាហ៍ពិពាហ៍ របស់យើងខ្ញុំ នាពេលខាងមុខនេះ។ យើងខ្ញុំសូមការខន្តីអភ័យទោស
+        ដែលពុំបានជូនលិខិតអញ្ជើញ ដោយផ្ទាល់។ ដោយការវកិច្ចដ៏ខ្ពង់ខ្ពស់ពីយើងខ្ញុំ។
+      </p>
+      <p class="thanks-message en">
+        We are extremely thankful for H.E., L.C.T., Okhna, ladies and gentlemen for your presence
+        in the upcoming marriage of our children. We would like to apologize if this invitation
+        has not been personally delivered by us.
+      </p>
+    </div>
 
     <p class="section-label gold">
       <span class="km">ចងដៃតាមរយៈ KHQR</span>
@@ -297,7 +310,8 @@
       <button class="currency-btn active" data-currency="USD">USD</button>
       <button class="currency-btn" data-currency="KHR"><span class="km">រៀល</span><span class="en">Riel</span></button>
     </div>
-    <p class="scan-pay">Scan. Pay. Done.</p>
+    <p class="scan-pay km">ស្កេន។ បង់ប្រាក់។ ហើយចប់។</p>
+    <p class="scan-pay en">Scan. Pay. Done.</p>
 
     <div class="qr-block">
       <canvas id="giftQr" width="180" height="180"></canvas>
@@ -319,12 +333,12 @@
         <span class="en">Confirm your attendance</span>
       </p>
       <div class="rsvp-toggle" id="rsvpToggle" role="radiogroup" aria-label="Confirm attendance">
-        <button type="button" class="rsvp-btn" data-attending="yes">
+        <button type="button" class="rsvp-btn" data-attending="yes" role="radio" aria-checked="false">
           <span aria-hidden="true">✓</span>
           <span class="km">ចូលរួម</span>
           <span class="en">Yes</span>
         </button>
-        <button type="button" class="rsvp-btn" data-attending="no">
+        <button type="button" class="rsvp-btn" data-attending="no" role="radio" aria-checked="false">
           <span aria-hidden="true">✗</span>
           <span class="km">បដិសេធ</span>
           <span class="en">No</span>
@@ -345,9 +359,10 @@
     </div>
   </section>
 
-  <footer class="site-footer">
+  <footer class="site-footer" data-content="footerText">
     <p class="km">សូមអរគុណចំពោះការអញ្ជើញចូលរួមជាមួយយើងខ្ញុំ 🤍</p>
     <p class="en">Thank you for celebrating with us 🤍</p>
+    <p class="admin-link-row"><a href="admin.html" class="admin-link">Admin</a></p>
   </footer>
 </div>
 
@@ -375,7 +390,7 @@
 </button>
 
 <!-- Lightbox modal -->
-<div class="lightbox" id="lightbox">
+<div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Photo viewer / កម្មវិធីមើលរូបភាព">
   <button class="lightbox-close" id="lightboxClose" aria-label="Close">&times;</button>
   <div class="lightbox-content" id="lightboxContent"></div>
 </div>
@@ -386,6 +401,7 @@
 
 <script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.3/build/qrcode.min.js"></script>
 <script type="module" src="js/wishes.js"></script>
+<script type="module" src="js/render-content.js"></script>
 <script src="js/app.js"></script>
 </body>
 </html>

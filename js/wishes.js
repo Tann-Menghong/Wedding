@@ -1,4 +1,4 @@
-import { firebaseConfig } from './firebase-config.js';
+import { isFirebaseConfigured, getFirebaseApp, FIREBASE_CDN } from './firebase-init.js';
 
 const form = document.getElementById('wishForm');
 const nameInput = document.getElementById('wishName');
@@ -8,19 +8,24 @@ const statusEl = document.getElementById('wishStatus');
 const listEl = document.getElementById('wishList');
 const rsvpButtons = document.querySelectorAll('#rsvpToggle .rsvp-btn');
 
-const isConfigured = firebaseConfig.apiKey !== 'YOUR_API_KEY';
-
 let selectedAttending = null;
 rsvpButtons.forEach(btn => {
   btn.addEventListener('click', () => {
     selectedAttending = btn.dataset.attending;
-    rsvpButtons.forEach(b => b.classList.toggle('selected', b === btn));
+    rsvpButtons.forEach(b => {
+      const isSelected = b === btn;
+      b.classList.toggle('selected', isSelected);
+      b.setAttribute('aria-checked', String(isSelected));
+    });
   });
 });
 
 function resetRsvp() {
   selectedAttending = null;
-  rsvpButtons.forEach(b => b.classList.remove('selected'));
+  rsvpButtons.forEach(b => {
+    b.classList.remove('selected');
+    b.setAttribute('aria-checked', 'false');
+  });
 }
 
 function setStatus(text) {
@@ -59,15 +64,16 @@ function renderWishes(wishes) {
 
     const timeEl = document.createElement('p');
     timeEl.className = 'wish-time';
-    timeEl.textContent = createdAt ? new Date(createdAt).toLocaleString() : 'just now';
+    timeEl.textContent = createdAt ? new Date(createdAt).toLocaleString() : 'Just now / ឥឡូវនេះ';
 
     card.append(nameEl, attendingEl, msgEl, timeEl);
     listEl.appendChild(card);
   });
 }
 
-if (!isConfigured) {
-  renderEmpty('Guest wishes are not connected yet. Configure Firebase in js/firebase-config.js (see README.md) to enable this feature.');
+if (!isFirebaseConfigured) {
+  // Guest-facing copy only — setup instructions belong in README.md, not on the live page.
+  renderEmpty('Guest wishes are coming soon! / សារជូនពរនឹងមកដល់ឆាប់ៗនេះ!');
   submitBtn.disabled = true;
   setStatus('');
 } else {
@@ -76,12 +82,11 @@ if (!isConfigured) {
 
 async function initFirebase() {
   try {
-    const { initializeApp } = await import('https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js');
+    const app = await getFirebaseApp();
     const {
       getFirestore, collection, addDoc, query, orderBy, limit, onSnapshot, serverTimestamp
-    } = await import('https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js');
+    } = await import(`${FIREBASE_CDN}/firebase-firestore.js`);
 
-    const app = initializeApp(firebaseConfig);
     const db = getFirestore(app);
     const wishesRef = collection(db, 'wishes');
 
@@ -99,7 +104,7 @@ async function initFirebase() {
       renderWishes(wishes);
     }, (err) => {
       console.error('Failed to load wishes', err);
-      renderEmpty('Could not load wishes right now. Please try again later.');
+      renderEmpty('Could not load wishes right now. Please try again later. / មិនអាចទាញយកសារជូនពរបានទេពេលនេះ សូមព្យាយាមម្តងទៀតពេលក្រោយ។');
     });
 
     form.addEventListener('submit', async (e) => {
@@ -126,13 +131,13 @@ async function initFirebase() {
         setStatus('Thank you for your wishes! / អរគុណសម្រាប់សារជូនពរ!');
       } catch (err) {
         console.error('Failed to send wish', err);
-        setStatus('Something went wrong. Please try again.');
+        setStatus('Something went wrong. Please try again. / មានបញ្ហាបច្ចេកទេស សូមព្យាយាមម្តងទៀត។');
       } finally {
         submitBtn.disabled = false;
       }
     });
   } catch (err) {
     console.error('Firebase init failed', err);
-    renderEmpty('Could not connect to the guestbook service.');
+    renderEmpty('Could not connect to the guestbook service. / មិនអាចភ្ជាប់ទៅសេវាសារជូនពរបានទេ។');
   }
 }

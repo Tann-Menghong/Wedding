@@ -18,14 +18,16 @@ html, body {
   padding: 0;
   background: #e9e1d8;
   color: var(--ink);
-  font-family: 'Battambang', 'Playfair Display', serif;
+  font-family: 'Battambang', 'Khmer OS', 'Noto Sans Khmer', 'Khmer Sangam MN', 'Playfair Display', serif;
   -webkit-font-smoothing: antialiased;
 }
 
 /* language visibility */
 html[data-lang="km"] .en { display: none; }
 html[data-lang="en"] .km { display: none; }
-html[data-lang="km"] body { font-family: 'Battambang', serif; }
+/* System Khmer fallbacks keep Khmer text legible (no tofu boxes) if the
+   Google Fonts request is ever slow, blocked, or offline. */
+html[data-lang="km"] body { font-family: 'Battambang', 'Khmer OS', 'Noto Sans Khmer', 'Khmer Sangam MN', serif; }
 
 a { text-decoration: none; color: inherit; }
 button { font-family: inherit; cursor: pointer; border: none; background: none; }
@@ -129,6 +131,8 @@ html[data-lang="en"] .knob { left: 16px; }
   z-index: 3;
 }
 .sound-toggle.muted { color: #c7c0b8; }
+.mute-slash { opacity: 0; transition: opacity 0.2s ease; }
+.sound-toggle.muted .mute-slash { opacity: 1; }
 
 .monogram-mini {
   font-family: 'Great Vibes', cursive;
@@ -139,7 +143,7 @@ html[data-lang="en"] .knob { left: 16px; }
 .monogram-mini.center { margin: 0 18px; }
 
 .couple-script {
-  font-family: 'Moul', serif;
+  font-family: 'Moul', 'Khmer OS', 'Noto Sans Khmer', serif;
   color: var(--gold);
   font-size: 30px;
   margin: 4px 0 10px;
@@ -167,8 +171,13 @@ html[data-lang="en"] .knob { left: 16px; }
   border-radius: 999px;
   box-shadow: 0 6px 14px rgba(201,162,39,0.35);
   font-size: 15px;
+  animation: invite-pulse 2.6s ease-in-out infinite;
 }
 .open-btn:active { transform: scale(0.97); }
+@keyframes invite-pulse {
+  0%, 100% { box-shadow: 0 6px 14px rgba(201,162,39,0.35); }
+  50% { box-shadow: 0 6px 22px rgba(201,162,39,0.6); }
+}
 
 /* ---------- Date cover ---------- */
 .cover { min-height: 100vh; display: flex; align-items: center; justify-content: center; }
@@ -180,7 +189,13 @@ html[data-lang="en"] .knob { left: 16px; }
   padding: 60px 30px;
   text-align: center;
   width: 100%;
+  border: 1px solid rgba(201,162,39,0.18);
   box-shadow: 0 10px 30px rgba(0,0,0,0.06);
+  animation: frame-glow 5s ease-in-out infinite;
+}
+@keyframes frame-glow {
+  0%, 100% { box-shadow: 0 10px 30px rgba(0,0,0,0.06); }
+  50% { box-shadow: 0 10px 30px rgba(0,0,0,0.06), 0 0 40px 6px rgba(201,162,39,0.12); }
 }
 .section-label { color: var(--olive); font-weight: 700; margin: 18px 0 8px; }
 .section-label.gold { color: var(--gold); }
@@ -190,13 +205,20 @@ html[data-lang="en"] .knob { left: 16px; }
   display: flex;
   flex-direction: column;
   border: 1px solid var(--olive);
-  border-radius: 8px;
-  padding: 6px 10px;
+  border-radius: 10px;
+  padding: 8px 12px;
   color: var(--olive-dark);
   font-weight: 700;
   font-size: 14px;
+  background: linear-gradient(180deg, #fff 0%, rgba(91,107,69,0.06) 100%);
+  box-shadow: 0 4px 12px rgba(91,107,69,0.12);
 }
-.date-num { font-size: 42px; color: var(--olive-dark); font-weight: 700; }
+.date-num {
+  font-size: 42px;
+  color: var(--olive-dark);
+  font-weight: 700;
+  text-shadow: 0 2px 10px rgba(201,162,39,0.25);
+}
 .date-num.small { font-size: 30px; }
 .date-row.small { margin: 6px 0; }
 .date-year { font-size: 26px; color: var(--olive-dark); font-weight: 700; margin: 4px 0; }
@@ -205,11 +227,34 @@ html[data-lang="en"] .knob { left: 16px; }
 
 /* ---------- Invitation ---------- */
 .section-title {
+  position: relative;
   text-align: center;
   color: var(--gold);
   font-size: 20px;
   font-weight: 700;
-  margin-bottom: 22px;
+  margin-bottom: 30px;
+  padding-bottom: 14px;
+}
+.section-title::after {
+  content: '';
+  position: absolute;
+  left: 50%;
+  bottom: 0;
+  width: 56px;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, var(--gold-light) 20%, var(--gold) 50%, var(--gold-light) 80%, transparent);
+  transform: translateX(-50%);
+}
+.section-title::before {
+  content: '✦';
+  position: absolute;
+  left: 50%;
+  bottom: -5px;
+  transform: translateX(-50%);
+  font-size: 11px;
+  color: var(--gold);
+  background: var(--cream);
+  padding: 0 6px;
 }
 .parents-row { display: flex; justify-content: space-between; gap: 12px; margin-bottom: 18px; }
 .parent-col { flex: 1; text-align: center; }
@@ -245,6 +290,9 @@ html[data-lang="en"] .knob { left: 16px; }
 
 .cta-row { text-align: center; margin-top: 22px; }
 .ornate-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
   background: linear-gradient(180deg, #f3dca0, var(--gold));
   color: #fff;
   font-weight: 700;
@@ -280,12 +328,24 @@ html[data-lang="en"] .knob { left: 16px; }
   background: linear-gradient(0deg, rgba(0,0,0,0.55), rgba(0,0,0,0));
   color: #fff;
 }
-.countdown-label { font-weight: 700; margin-bottom: 10px; }
-.countdown { display: flex; justify-content: center; gap: 14px; margin-bottom: 10px; }
-.cd-unit { display: flex; flex-direction: column; align-items: center; min-width: 46px; }
-.cd-num { font-size: 26px; font-weight: 700; }
+.countdown-label { font-weight: 700; margin-bottom: 10px; letter-spacing: 0.04em; }
+.countdown { display: flex; justify-content: center; gap: 10px; margin-bottom: 10px; }
+.cd-unit {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  min-width: 54px;
+  padding: 10px 6px;
+  border-radius: 14px;
+  background: rgba(255,255,255,0.14);
+  border: 1px solid rgba(255,255,255,0.22);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+}
+.cd-num { font-size: 26px; font-weight: 700; line-height: 1; font-variant-numeric: tabular-nums; }
 .cd-label { font-size: 11px; opacity: 0.85; }
-.congrats-text { color: var(--gold-light); font-weight: 700; font-size: 18px; margin: 6px 0 0; }
+.congrats-text { display: none; color: var(--gold-light); font-weight: 700; font-size: 18px; margin: 6px 0 0; }
 
 /* ---------- Schedule ---------- */
 .schedule-date { text-align: center; color: var(--olive); font-size: 13px; margin: -10px 0 24px; }
@@ -297,7 +357,17 @@ html[data-lang="en"] .knob { left: 16px; }
   border-bottom: 1px dashed var(--gold-light);
 }
 .timeline li:last-child { border-bottom: none; }
-.timeline .time { display: block; color: var(--gold); font-weight: 700; font-size: 15px; margin-bottom: 4px; }
+.timeline .time {
+  display: inline-block;
+  color: #fff;
+  background: linear-gradient(180deg, #e7c878, var(--gold));
+  font-weight: 700;
+  font-size: 13px;
+  padding: 3px 14px;
+  border-radius: 999px;
+  margin-bottom: 8px;
+  box-shadow: 0 3px 8px rgba(201,162,39,0.25);
+}
 .timeline p { margin: 0; color: var(--olive-dark); font-size: 14px; font-weight: 700; }
 
 /* ---------- Location ---------- */
@@ -386,7 +456,9 @@ html[data-lang="en"] .knob { left: 16px; }
 .wish-card {
   background: #eef1e6;
   border-radius: 12px;
-  padding: 12px 14px;
+  padding: 12px 14px 12px 16px;
+  border-left: 3px solid var(--gold);
+  box-shadow: 0 3px 10px rgba(91,107,69,0.08);
 }
 .wish-card .wish-name { font-weight: 700; color: var(--olive-dark); font-size: 14px; margin: 0 0 4px; }
 .wish-card .wish-attending { font-size: 11px; font-weight: 700; margin: 0 0 4px; }
@@ -402,6 +474,14 @@ html[data-lang="en"] .knob { left: 16px; }
   color: var(--olive);
   font-size: 13px;
   background: var(--cream);
+}
+.site-footer::before {
+  content: '❀';
+  display: block;
+  color: var(--gold);
+  font-size: 16px;
+  margin-bottom: 12px;
+  opacity: 0.85;
 }
 
 /* ---------- Bottom nav ---------- */
@@ -456,13 +536,25 @@ html[data-lang="en"] .knob { left: 16px; }
   position: fixed;
   inset: 0;
   background: rgba(0,0,0,0.85);
-  display: none;
+  display: flex;
   align-items: center;
   justify-content: center;
   z-index: 100;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.25s ease;
 }
-.lightbox.open { display: flex; }
-.lightbox-content { width: 86%; max-width: 420px; aspect-ratio: 1; border-radius: 12px; overflow: hidden; }
+.lightbox.open { opacity: 1; visibility: visible; }
+.lightbox-content {
+  width: 86%;
+  max-width: 420px;
+  aspect-ratio: 1;
+  border-radius: 12px;
+  overflow: hidden;
+  transform: scale(0.92);
+  transition: transform 0.25s ease;
+}
+.lightbox.open .lightbox-content { transform: scale(1); }
 .lightbox-close {
   position: absolute;
   top: 20px;
@@ -475,4 +567,202 @@ html[data-lang="en"] .knob { left: 16px; }
 @media (min-width: 481px) {
   body { background: #ddd3c5; }
   .main-content, .bottom-nav, .scroll-top { box-shadow: 0 0 40px rgba(0,0,0,0.15); }
+}
+
+/* ====================================================================
+   Polish pass — refined shadows, motion, falling petals & flowers
+   ==================================================================== */
+
+/* Sections sit above the fixed petal layer; footer needs its own stacking
+   context since it isn't a .screen. */
+.screen { z-index: 2; }
+.site-footer { position: relative; z-index: 2; }
+
+a, button { transition: transform 0.15s ease, box-shadow 0.15s ease, background 0.2s ease, color 0.2s ease; }
+
+.frame-card {
+  border: 1px solid rgba(201,162,39,0.18);
+  box-shadow: 0 14px 36px rgba(58,53,48,0.1);
+}
+
+.open-btn, .ornate-btn {
+  box-shadow: 0 6px 16px rgba(201,162,39,0.3);
+}
+.open-btn:hover, .ornate-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 22px rgba(201,162,39,0.4);
+}
+.open-btn:active, .ornate-btn:active { transform: translateY(0) scale(0.97); }
+
+.rsvp-btn, .currency-btn { transition: transform 0.15s ease, background 0.2s ease, color 0.2s ease, box-shadow 0.15s ease; }
+.rsvp-btn:hover, .currency-btn:hover { box-shadow: 0 4px 10px rgba(91,107,69,0.18); }
+
+.wish-form input, .wish-form textarea { transition: border-color 0.2s ease, box-shadow 0.2s ease; }
+.wish-form input:focus, .wish-form textarea:focus {
+  outline: none;
+  border-color: var(--gold);
+  box-shadow: 0 0 0 3px rgba(201,162,39,0.15);
+}
+
+/* Cleaner, centered timeline with a small marker per item */
+.timeline li { position: relative; padding-top: 4px; }
+.timeline li::before {
+  content: '';
+  display: block;
+  width: 8px;
+  height: 8px;
+  margin: 0 auto 10px;
+  background: var(--gold);
+  border-radius: 50%;
+  box-shadow: 0 0 0 4px rgba(201,162,39,0.15);
+}
+
+/* Cascading reveal: each timeline item settles in slightly after the one
+   before it once the schedule section enters the viewport. */
+.screen.in-view .timeline li { animation: settle-in 0.6s ease-out both; }
+.screen.in-view .timeline li:nth-child(1) { animation-delay: 0.03s; }
+.screen.in-view .timeline li:nth-child(2) { animation-delay: 0.09s; }
+.screen.in-view .timeline li:nth-child(3) { animation-delay: 0.15s; }
+.screen.in-view .timeline li:nth-child(4) { animation-delay: 0.21s; }
+.screen.in-view .timeline li:nth-child(5) { animation-delay: 0.27s; }
+.screen.in-view .timeline li:nth-child(6) { animation-delay: 0.33s; }
+.screen.in-view .timeline li:nth-child(7) { animation-delay: 0.39s; }
+.screen.in-view .timeline li:nth-child(8) { animation-delay: 0.45s; }
+
+.gallery-grid .tile {
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+  box-shadow: 0 4px 14px rgba(58,53,48,0.08);
+}
+.gallery-grid .tile:hover { transform: translateY(-3px) scale(1.02); box-shadow: 0 10px 22px rgba(58,53,48,0.16); }
+
+/* Cascading reveal for gallery tiles, same idea as the timeline stagger above.
+   Uses its own keyframes (not settle-in) because .tile's resting opacity is
+   0.9, not 1 -- settle-in would have permanently brightened tiles after the
+   fill-mode:both animation finished. */
+@keyframes tile-settle-in {
+  from { opacity: 0; transform: translateY(18px); }
+  to { opacity: 0.9; transform: translateY(0); }
+}
+.screen.in-view .gallery-grid .tile { animation: tile-settle-in 0.5s ease-out both; }
+.screen.in-view .gallery-grid .tile:nth-child(1) { animation-delay: 0.02s; }
+.screen.in-view .gallery-grid .tile:nth-child(2) { animation-delay: 0.07s; }
+.screen.in-view .gallery-grid .tile:nth-child(3) { animation-delay: 0.12s; }
+.screen.in-view .gallery-grid .tile:nth-child(4) { animation-delay: 0.17s; }
+.screen.in-view .gallery-grid .tile:nth-child(5) { animation-delay: 0.22s; }
+.screen.in-view .gallery-grid .tile:nth-child(6) { animation-delay: 0.27s; }
+.gallery-grid .tile.photo-tile { background: none; }
+.gallery-grid .tile.photo-tile img { width: 100%; height: 100%; object-fit: cover; display: block; }
+
+.hero-img.has-photo { background: none; padding: 0; }
+.hero-photo-img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+
+.bottom-nav {
+  background: rgba(255,255,255,0.82);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+.nav-item { transition: color 0.2s ease, background 0.2s ease; }
+.nav-item.active { box-shadow: 0 4px 10px rgba(91,107,69,0.3); animation: nav-pop 0.35s ease-out; }
+@keyframes nav-pop {
+  0% { transform: scale(0.8); }
+  60% { transform: scale(1.15); }
+  100% { transform: scale(1); }
+}
+
+/* Preserve admin-entered line breaks in long-form text fields */
+.venue-text, .invitation-message, .thanks-message, .site-footer p.km, .site-footer p.en {
+  white-space: pre-line;
+}
+
+.admin-link-row { margin-top: 14px; }
+.admin-link {
+  display: inline-block;
+  font-size: 11px;
+  padding: 5px 14px;
+  border: 1px solid #c2b9a8;
+  border-radius: 999px;
+  color: #c2b9a8;
+  text-decoration: none;
+  transition: color 0.2s ease, border-color 0.2s ease, background 0.2s ease;
+}
+.admin-link:hover {
+  color: var(--olive);
+  border-color: var(--olive);
+  background: rgba(91,107,69,0.08);
+}
+
+/* Scroll-reveal: sections animate in once they enter the viewport, but
+   stay fully visible by default if JS never adds .in-view (no-JS safe). */
+@keyframes settle-in {
+  from { opacity: 0; transform: translateY(18px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.in-view { animation: settle-in 0.7s ease-out both; }
+
+/* Ambient floating gradient blobs behind the splash + hero sections */
+.splash::before, .hero-photo::before {
+  content: '';
+  position: absolute;
+  inset: -10%;
+  z-index: 1;
+  background:
+    radial-gradient(circle at 20% 25%, rgba(243,201,207,0.55), transparent 45%),
+    radial-gradient(circle at 80% 70%, rgba(232,196,104,0.4), transparent 50%);
+  animation: blob-float 16s ease-in-out infinite alternate;
+  pointer-events: none;
+}
+@keyframes blob-float {
+  0% { transform: translate(0, 0) scale(1); }
+  100% { transform: translate(3%, -4%) scale(1.08); }
+}
+
+/* Falling petals + flowers ambient background, generated by initPetals() in app.js */
+.petals-bg {
+  position: fixed;
+  inset: 0;
+  z-index: 1;
+  overflow: hidden;
+  pointer-events: none;
+}
+.petal {
+  position: absolute;
+  top: -10vh;
+  opacity: 0.85;
+  animation-name: petal-fall, petal-sway;
+  animation-timing-function: linear, ease-in-out;
+  animation-iteration-count: infinite, infinite;
+  will-change: transform;
+}
+.petal-1 { background: var(--pink); border-radius: 0% 60% 0% 60%; transform: rotate(20deg); }
+.petal-2 { background: var(--gold-light); border-radius: 60% 0% 60% 0%; transform: rotate(-15deg); }
+.petal-3 { background: #cdd9b8; border-radius: 50% 0% 50% 50%; transform: rotate(35deg); }
+.petal-4 { background: var(--blush); border-radius: 0% 50% 50% 50%; transform: rotate(-30deg); }
+.petal-flower { color: var(--pink); overflow: visible; }
+@keyframes petal-fall {
+  from { transform: translateY(0) rotate(0deg); }
+  to { transform: translateY(120vh) rotate(360deg); }
+}
+@keyframes petal-sway {
+  0%, 100% { margin-left: 0; }
+  50% { margin-left: var(--drift, 20px); }
+}
+
+/* Themed keyboard-focus ring (only shows for keyboard/programmatic focus,
+   not mouse clicks) so tabbing through the page stays on-brand instead of
+   falling back to the browser's default blue outline. */
+a:focus-visible, button:focus-visible, [role="button"]:focus-visible {
+  outline: 2px solid var(--gold);
+  outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .petals-bg { display: none; }
+  .splash::before, .hero-photo::before { animation: none; }
+  .in-view { animation: none; }
+  .screen.in-view .timeline li { animation: none; }
+  .screen.in-view .gallery-grid .tile { animation: none; }
+  .nav-item.active { animation: none; }
+  .frame-card { animation: none; }
+  a, button, .open-btn, .ornate-btn, .gallery-grid .tile, .lightbox, .lightbox-content { transition: none; }
+  .open-btn { animation: none; }
 }
