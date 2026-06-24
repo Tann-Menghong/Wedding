@@ -634,6 +634,22 @@ a, button { transition: transform 0.15s ease, box-shadow 0.15s ease, background 
   box-shadow: 0 4px 14px rgba(58,53,48,0.08);
 }
 .gallery-grid .tile:hover { transform: translateY(-3px) scale(1.02); box-shadow: 0 10px 22px rgba(58,53,48,0.16); }
+
+/* Cascading reveal for gallery tiles, same idea as the timeline stagger above.
+   Uses its own keyframes (not settle-in) because .tile's resting opacity is
+   0.9, not 1 -- settle-in would have permanently brightened tiles after the
+   fill-mode:both animation finished. */
+@keyframes tile-settle-in {
+  from { opacity: 0; transform: translateY(18px); }
+  to { opacity: 0.9; transform: translateY(0); }
+}
+.screen.in-view .gallery-grid .tile { animation: tile-settle-in 0.5s ease-out both; }
+.screen.in-view .gallery-grid .tile:nth-child(1) { animation-delay: 0.02s; }
+.screen.in-view .gallery-grid .tile:nth-child(2) { animation-delay: 0.07s; }
+.screen.in-view .gallery-grid .tile:nth-child(3) { animation-delay: 0.12s; }
+.screen.in-view .gallery-grid .tile:nth-child(4) { animation-delay: 0.17s; }
+.screen.in-view .gallery-grid .tile:nth-child(5) { animation-delay: 0.22s; }
+.screen.in-view .gallery-grid .tile:nth-child(6) { animation-delay: 0.27s; }
 .gallery-grid .tile.photo-tile { background: none; }
 .gallery-grid .tile.photo-tile img { width: 100%; height: 100%; object-fit: cover; display: block; }
 
@@ -744,6 +760,7 @@ a:focus-visible, button:focus-visible, [role="button"]:focus-visible {
   .splash::before, .hero-photo::before { animation: none; }
   .in-view { animation: none; }
   .screen.in-view .timeline li { animation: none; }
+  .screen.in-view .gallery-grid .tile { animation: none; }
   .nav-item.active { animation: none; }
   .frame-card { animation: none; }
   a, button, .open-btn, .ornate-btn, .gallery-grid .tile, .lightbox, .lightbox-content { transition: none; }
