@@ -175,6 +175,7 @@ document.addEventListener('wedding:content-ready', (e) => {
   const grid = document.getElementById('galleryGrid');
   const lightbox = document.getElementById('lightbox');
   const content = document.getElementById('lightboxContent');
+  const lightboxCloseBtn = document.getElementById('lightboxClose');
   const TILE_COUNT = 6;
 
   for (let i = 0; i < TILE_COUNT; i++) {
@@ -191,7 +192,7 @@ document.addEventListener('wedding:content-ready', (e) => {
       content.style.justifyContent = 'center';
       content.style.background = 'linear-gradient(160deg, #efd9c4, #cbb59f)';
       content.style.color = '#fff';
-      lightbox.classList.add('open');
+      openLightbox(tile);
     };
     tile.addEventListener('click', openTile);
     tile.addEventListener('keydown', (e) => {
@@ -203,14 +204,38 @@ document.addEventListener('wedding:content-ready', (e) => {
     grid.appendChild(tile);
   }
 
-  document.getElementById('lightboxClose').addEventListener('click', () => {
+  // Moves focus into the modal on open and back to the triggering tile on
+  // close, since a lightbox that just appears visually leaves keyboard and
+  // screen-reader users stranded on a tile underneath it.
+  function openLightbox(triggerEl) {
+    lightbox._triggerEl = triggerEl;
+    lightbox.classList.add('open');
+    lightboxCloseBtn.focus();
+  }
+  window.openLightbox = openLightbox;
+
+  function closeLightbox() {
+    if (!lightbox.classList.contains('open')) return;
     lightbox.classList.remove('open');
-  });
+    const trigger = lightbox._triggerEl;
+    lightbox._triggerEl = null;
+    if (trigger && typeof trigger.focus === 'function') trigger.focus();
+  }
+
+  lightboxCloseBtn.addEventListener('click', closeLightbox);
   lightbox.addEventListener('click', (e) => {
-    if (e.target === lightbox) lightbox.classList.remove('open');
+    if (e.target === lightbox) closeLightbox();
   });
   document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape') lightbox.classList.remove('open');
+    if (e.key === 'Escape') closeLightbox();
+  });
+  // The close button is the only focusable element inside the dialog, so
+  // Tab/Shift+Tab should simply keep focus pinned there while it's open.
+  lightbox.addEventListener('keydown', (e) => {
+    if (e.key === 'Tab') {
+      e.preventDefault();
+      lightboxCloseBtn.focus();
+    }
   });
 })();
 

@@ -39,8 +39,7 @@ function buildTimeline(schedule) {
   });
 }
 
-function openLightboxImage(url) {
-  const lightbox = document.getElementById('lightbox');
+function openLightboxImage(url, triggerEl) {
   const content = document.getElementById('lightboxContent');
   content.innerHTML = '';
   content.style.display = '';
@@ -53,7 +52,7 @@ function openLightboxImage(url) {
   img.style.height = '100%';
   img.style.objectFit = 'cover';
   content.appendChild(img);
-  lightbox.classList.add('open');
+  window.openLightbox(triggerEl);
 }
 
 function buildGallery(urls) {
@@ -71,11 +70,11 @@ function buildGallery(urls) {
     img.alt = '';
     img.loading = 'lazy';
     tile.appendChild(img);
-    tile.addEventListener('click', () => openLightboxImage(url));
+    tile.addEventListener('click', () => openLightboxImage(url, tile));
     tile.addEventListener('keydown', (e) => {
       if (e.key === 'Enter' || e.key === ' ') {
         e.preventDefault();
-        openLightboxImage(url);
+        openLightboxImage(url, tile);
       }
     });
     grid.appendChild(tile);
